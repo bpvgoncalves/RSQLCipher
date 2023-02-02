@@ -156,14 +156,14 @@ test_that("interrupt in busy handler", {
   # This test makes use of the installed package!
   session <- callr::r_session$new()
   session$run(args = list(dbfile = dbfile), function(dbfile) {
-    .GlobalEnv$con2 <- DBI::dbConnect(RSQLite::SQLite(), dbfile)
+    .GlobalEnv$con2 <- DBI::dbConnect(RSQLCipher::SQLite(), dbfile)
 
     cb <- function(n) {
       message(n)
       Sys.sleep(10)
       1L
     }
-    RSQLite::sqliteSetBusyHandler(.GlobalEnv$con2, cb)
+    RSQLCipher::sqliteSetBusyHandler(.GlobalEnv$con2, cb)
   })
 
   dbExecute(con1, "BEGIN IMMEDIATE")
@@ -211,7 +211,7 @@ test_that("busy_handler timeout", {
 
   dbfile <- tempfile()
   con1 <- dbConnect(SQLite(), dbfile)
-  con2 <- dbConnect(RSQLite::SQLite(), dbfile)
+  con2 <- dbConnect(RSQLCipher::SQLite(), dbfile)
   on.exit(dbDisconnect(con1), add = TRUE)
   on.exit(dbDisconnect(con2), add = TRUE)
 
