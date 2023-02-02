@@ -67,7 +67,7 @@
 #' @examples
 #' library(DBI)
 #' # Initialize a temporary in memory database and copy a data.frame into it
-#' con <- dbConnect(RSQLite::SQLite(), ":memory:")
+#' con <- dbConnect(RSQLCipher::SQLite(), ":memory:")
 #' data(USArrests)
 #' dbWriteTable(con, "USArrests", USArrests)
 #' dbListTables(con)

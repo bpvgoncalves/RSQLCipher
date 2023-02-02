@@ -23,13 +23,13 @@
 #' @rdname dbReadTable
 #' @examples
 #' library(DBI)
-#' db <- RSQLite::datasetsDb()
+#' db <- RSQLCipher::datasetsDb()
 #' dbReadTable(db, "mtcars")
 #' dbReadTable(db, "mtcars", row.names = FALSE)
 #' dbDisconnect(db)
 #' @usage NULL
 dbReadTable_SQLiteConnection_character <- function(conn, name, ...,
-                                                   row.names = pkgconfig::get_config("RSQLite::row.names.table", FALSE),
+                                                   row.names = pkgconfig::get_config("RSQLCipher::row.names.table", FALSE),
                                                    check.names = TRUE, select.cols = NULL) {
   name <- check_quoted_identifier(name)
 

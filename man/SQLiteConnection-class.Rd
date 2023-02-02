@@ -75,7 +75,7 @@
 \S4method{sqlData}{SQLiteConnection}(
   con,
   value,
-  row.names = pkgconfig::get_config("RSQLite::row.names.query", FALSE),
+  row.names = pkgconfig::get_config("RSQLCipher::row.names.query", FALSE),
   ...
 )
 }

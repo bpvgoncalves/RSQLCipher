@@ -53,7 +53,7 @@
 #' dbDisconnect(con)
 #' @usage NULL
 dbWriteTable_SQLiteConnection_character_data.frame <- function(conn, name, value, ...,
-                                                               row.names = pkgconfig::get_config("RSQLite::row.names.table", FALSE),
+                                                               row.names = pkgconfig::get_config("RSQLCipher::row.names.table", FALSE),
                                                                overwrite = FALSE, append = FALSE,
                                                                field.types = NULL, temporary = FALSE) {
   row.names <- compatRowNames(row.names)

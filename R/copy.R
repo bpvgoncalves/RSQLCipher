@@ -15,11 +15,11 @@
 #' @examples
 #' library(DBI)
 #' # Copy the built in databaseDb() to an in-memory database
-#' con <- dbConnect(RSQLite::SQLite(), ":memory:")
+#' con <- dbConnect(RSQLCipher::SQLite(), ":memory:")
 #' dbListTables(con)
 #'
-#' db <- RSQLite::datasetsDb()
-#' RSQLite::sqliteCopyDatabase(db, con)
+#' db <- RSQLCipher::datasetsDb()
+#' RSQLCipher::sqliteCopyDatabase(db, con)
 #' dbDisconnect(db)
 #' dbListTables(con)
 #'

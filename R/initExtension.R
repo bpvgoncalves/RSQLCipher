@@ -44,26 +44,26 @@
 #' @export
 #' @examples
 #' library(DBI)
-#' db <- RSQLite::datasetsDb()
+#' db <- RSQLCipher::datasetsDb()
 #'
 #' # math
-#' RSQLite::initExtension(db)
+#' RSQLCipher::initExtension(db)
 #' dbGetQuery(db, "SELECT stdev(mpg) FROM mtcars")
 #' sd(mtcars$mpg)
 #'
 #' # regexp
-#' RSQLite::initExtension(db, "regexp")
+#' RSQLCipher::initExtension(db, "regexp")
 #' dbGetQuery(db, "SELECT * FROM mtcars WHERE carb REGEXP '[12]'")
 #'
 #' # series
-#' RSQLite::initExtension(db, "series")
+#' RSQLCipher::initExtension(db, "series")
 #' dbGetQuery(db, "SELECT value FROM generate_series(0, 20, 5);")
 #'
 #' dbDisconnect(db)
 #'
 #' # csv
-#' db <- dbConnect(RSQLite::SQLite())
-#' RSQLite::initExtension(db, "csv")
+#' db <- dbConnect(RSQLCipher::SQLite())
+#' RSQLCipher::initExtension(db, "csv")
 #' # use the filename argument to mount CSV files from disk
 #' sql <- paste0(
 #'   "CREATE VIRTUAL TABLE tbl USING ",

@@ -11,7 +11,7 @@
 #' @rdname SQLiteConnection-class
 #' @usage NULL
 dbGetException_SQLiteConnection <- function(conn, ...) {
-  warning_once("RSQLite::dbGetException() is deprecated, please switch to using standard error handling via tryCatch().")
+  warning_once("RSQLCipher::dbGetException() is deprecated, please switch to using standard error handling via tryCatch().")
   list(
     errorNum = 0L,
     errorMsg = "OK"

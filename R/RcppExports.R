@@ -75,7 +75,7 @@ result_get_placeholder_names <- function(res) {
 #'   RSQLite.
 #' @export
 #' @examples
-#' RSQLite::rsqliteVersion()
+#' RSQLCipher::rsqliteVersion()
 rsqliteVersion <- function() {
     .Call(`_RSQLCipher_rsqliteVersion`)
 }

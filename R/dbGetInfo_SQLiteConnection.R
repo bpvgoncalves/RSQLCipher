@@ -1,7 +1,7 @@
 #' @rdname SQLiteConnection-class
 #' @usage NULL
 dbGetInfo_SQLiteConnection <- function(dbObj, ...) {
-  version <- RSQLite::rsqliteVersion()
+  version <- RSQLCipher::rsqliteVersion()
 
   list(
     db.version = version[[2]],

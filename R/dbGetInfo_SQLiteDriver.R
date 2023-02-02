@@ -1,7 +1,7 @@
 #' @rdname SQLiteDriver-class
 #' @usage NULL
 dbGetInfo_SQLiteDriver <- function(dbObj, ...) {
-  version <- RSQLite::rsqliteVersion()
+  version <- RSQLCipher::rsqliteVersion()
   list(
     driver.version = PACKAGE_VERSION,
     client.version = package_version(version[[2]])
