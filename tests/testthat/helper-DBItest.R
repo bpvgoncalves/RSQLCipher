@@ -21,7 +21,7 @@ if (packageVersion("DBItest") >= "1.6.0") {
       time_typed = FALSE,
       timestamp_typed = FALSE
     ),
-    name = "RSQLite",
+    name = "RSQLCipher",
     default_skip = default_skip
   )
 } else {
@@ -39,6 +39,6 @@ if (packageVersion("DBItest") >= "1.6.0") {
       time_typed = FALSE,
       timestamp_typed = FALSE
     ),
-    name = "RSQLite"
+    name = "RSQLCipher"
   )
 }

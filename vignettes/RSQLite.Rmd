@@ -25,7 +25,7 @@ library(DBI)
 To create a new SQLite database, you simply supply the filename to `dbConnect()`:
 
 ```{r}
-mydb <- dbConnect(RSQLite::SQLite(), "my-db.sqlite")
+mydb <- dbConnect(RSQLCipher::SQLite(), "my-db.sqlite")
 dbDisconnect(mydb)
 ```
 
@@ -36,7 +36,7 @@ unlink("my-db.sqlite")
 If you just need a temporary database, use either `""` (for an on-disk database) or `":memory:"` or `"file::memory:"` (for a in-memory database). This database will be automatically deleted when you disconnect from it.
 
 ```{r}
-mydb <- dbConnect(RSQLite::SQLite(), "")
+mydb <- dbConnect(RSQLCipher::SQLite(), "")
 dbDisconnect(mydb)
 ```
 
@@ -45,7 +45,7 @@ dbDisconnect(mydb)
 You can easily copy an R data frame into a SQLite database with `dbWriteTable()`:
 
 ```{r}
-mydb <- dbConnect(RSQLite::SQLite(), "")
+mydb <- dbConnect(RSQLCipher::SQLite(), "")
 dbWriteTable(mydb, "mtcars", mtcars)
 dbWriteTable(mydb, "iris", iris)
 dbListTables(mydb)

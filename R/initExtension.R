@@ -86,6 +86,6 @@ initExtension <- function(db, extension = c("math", "regexp", "series", "csv")) 
 }
 
 get_lib_path <- function() {
-  lib_path <- getLoadedDLLs()[["RSQLite"]][["path"]]
+  lib_path <- getLoadedDLLs()[["RSQLCipher"]][["path"]]
   enc2utf8(lib_path)
 }
