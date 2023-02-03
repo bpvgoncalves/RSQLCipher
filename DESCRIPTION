@@ -80,6 +80,7 @@ Collate:
     'dbBeginTransaction.R'
     'dbBegin_SQLiteConnection.R'
     'dbBind_SQLiteResult.R'
+    'dbChangeKey.R'
     'dbClearResult_SQLiteResult.R'
     'dbColumnInfo_SQLiteResult.R'
     'dbCommit_SQLiteConnection.R'
