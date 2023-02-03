@@ -46,6 +46,9 @@
 #' @param extended_types When `TRUE` columns of type `DATE`, `DATETIME` /
 #' `TIMESTAMP`, and `TIME` are mapped to corresponding R-classes, c.f. below
 #' for details. Defaults to `FALSE`.
+#' @param key  When different from NULL (no encryption) a character string of
+#' size 64, containing 32 hex encoded characters to be used as key for database
+#' encryption.
 #'
 #' @return `dbConnect()` returns an object of class [SQLiteConnection-class].
 #'
@@ -90,7 +93,7 @@ dbConnect_SQLiteDriver <- function(drv, dbname = "", ..., loadable.extensions = 
                                    default.extensions = loadable.extensions, cache_size = NULL,
                                    synchronous = "off", flags = SQLITE_RWC, vfs = NULL,
                                    bigint = c("integer64", "integer", "numeric", "character"),
-                                   extended_types = FALSE) {
+                                   extended_types = FALSE, key = NULL) {
   stopifnot(length(dbname) == 1, !is.na(dbname))
 
   if (!is_url_or_special_filename(dbname)) {
@@ -122,6 +125,26 @@ dbConnect_SQLiteDriver <- function(drv, dbname = "", ..., loadable.extensions = 
   )
 
   ## experimental PRAGMAs
+  if (!is.null(key)) {
+    if (is.character(key)) {
+      if (nchar(key) == 64) {
+        tryCatch(
+          dbExecute(conn, sprintf("PRAGMA key = \"x'%s'\";", key)),
+          error = function(e) {
+            warning("Couldn't set key for database: ", conditionMessage(e), "\n",
+                    "Use `key` = NULL to turn off this warning.",
+                    call. = FALSE
+            )
+          }
+        )
+      } else {
+        message("Cannot use database encryption. The 'key' provided has invalid length.")
+      }
+    } else {
+      message("Cannot use database encryption. The 'key' provided has invalid type.")
+    }
+  }
+
   if (!is.null(cache_size)) {
     cache_size <- as.integer(cache_size)
     tryCatch(
