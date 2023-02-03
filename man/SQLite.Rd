@@ -31,7 +31,8 @@ SQLite(...)
   flags = SQLITE_RWC,
   vfs = NULL,
   bigint = c("integer64", "integer", "numeric", "character"),
-  extended_types = FALSE
+  extended_types = FALSE,
+  key = NULL
 )
 
 \S4method{dbDisconnect}{SQLiteConnection}(conn, ...)
@@ -97,6 +98,10 @@ integers.}
 \item{extended_types}{When \code{TRUE} columns of type \code{DATE}, \code{DATETIME} /
 \code{TIMESTAMP}, and \code{TIME} are mapped to corresponding R-classes, c.f. below
 for details. Defaults to \code{FALSE}.}
+
+\item{key}{When different from NULL (no encryption) a character string of
+size 64, containing 32 hex encoded characters to be used as key for database
+encryption.}
 }
 \value{
 \code{SQLite()} returns an object of class \linkS4class{SQLiteDriver}.
