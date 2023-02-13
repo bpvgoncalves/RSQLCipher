@@ -1,5 +1,5 @@
 test_that("warning on dbFetch if result set open", {
-  con <- dbConnect(SQLite(), ":memory:")
+  con <- dbConnect(SQLCipher(), ":memory:")
   on.exit(dbDisconnect(con))
 
   res <- dbSendQuery(con, "SELECT 1;")
@@ -11,7 +11,7 @@ test_that("warning on dbFetch if result set open", {
 })
 
 test_that("accessing cleared result throws error", {
-  con <- dbConnect(SQLite(), ":memory:")
+  con <- dbConnect(SQLCipher(), ":memory:")
   on.exit(dbDisconnect(con))
 
   res <- dbSendQuery(con, "SELECT 1;")

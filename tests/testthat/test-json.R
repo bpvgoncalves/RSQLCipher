@@ -1,5 +1,5 @@
 test_that("JSON types function", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   gotJson <- dbGetQuery(con, 'SELECT json(\'{"this":"is","a":["test"]}\')')

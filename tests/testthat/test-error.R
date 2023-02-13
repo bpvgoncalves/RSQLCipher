@@ -1,5 +1,5 @@
 test_that("parameters with length != 1 (#89)", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbExecute(con, "CREATE TABLE records(x REAL, y REAL);")
@@ -30,7 +30,7 @@ test_that("parameters with length != 1 (#89)", {
 })
 
 test_that("multipart queries (#313)", {
-  con <- dbConnect(SQLite(), ":memory:")
+  con <- dbConnect(SQLCipher(), ":memory:")
   on.exit(dbDisconnect(con), add = TRUE)
 
   expect_silent(dbExecute(con, "create table Q(x integer); \n\t"))

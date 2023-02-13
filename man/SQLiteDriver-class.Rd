@@ -24,7 +24,7 @@
 \S4method{dbUnloadDriver}{SQLiteDriver}(drv, ...)
 }
 \description{
-SQLiteDriver objects are created by \code{\link[=SQLite]{SQLite()}}, and used to select the
+SQLiteDriver objects are created by \code{\link[=SQLCipher]{SQLCipher()}}, and used to select the
 correct method in \code{\link[=dbConnect]{dbConnect()}}.
 They are a superclass of the \linkS4class{DBIDriver} class,
 and used purely for dispatch.

@@ -73,7 +73,7 @@ dbGetQuery(db, "SELECT value FROM generate_series(0, 20, 5);")
 dbDisconnect(db)
 
 # csv
-db <- dbConnect(RSQLCipher::SQLite())
+db <- dbConnect(RSQLCipher::SQLCipher())
 RSQLCipher::initExtension(db, "csv")
 # use the filename argument to mount CSV files from disk
 sql <- paste0(

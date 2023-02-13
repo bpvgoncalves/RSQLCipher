@@ -11,7 +11,7 @@ test_that("sqliteQuickColumn round trips cleanly", {
     stringsAsFactors = FALSE
   )
 
-  db <- dbConnect(SQLite(), dbname = ":memory:")
+  db <- dbConnect(SQLCipher(), dbname = ":memory:")
   on.exit(dbDisconnect(db), add = TRUE)
 
   dbWriteTable(db, "t", df)

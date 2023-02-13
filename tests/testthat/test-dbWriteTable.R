@@ -1,6 +1,6 @@
 # Not generic enough for DBItest
 test_that("throws error if constraint violated", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   x <- data.frame(col1 = 1:10, col2 = letters[1:10])
@@ -17,7 +17,7 @@ test_that("throws error if constraint violated", {
 # In memory --------------------------------------------------------------------
 
 test_that("can't override existing table with default options", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   x <- data.frame(col1 = 1:10, col2 = letters[1:10])
@@ -26,7 +26,7 @@ test_that("can't override existing table with default options", {
 })
 
 test_that("throws error if constrainted violated", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   x <- data.frame(col1 = 1:10, col2 = letters[1:10])
@@ -42,7 +42,7 @@ test_that("throws error if constrainted violated", {
 test_that("can't add table when result set open", {
   # This needs to fail because cloning a temporary file or in memory
   # database creates new database
-  con <- dbConnect(SQLite(), tempfile())
+  con <- dbConnect(SQLCipher(), tempfile())
   on.exit(dbDisconnect(con))
 
   x <- data.frame(col1 = 1:10, col2 = letters[1:10])
@@ -54,7 +54,7 @@ test_that("can't add table when result set open", {
 })
 
 test_that("rownames not preserved by default", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   df <- data.frame(x = 1:10)
@@ -66,7 +66,7 @@ test_that("rownames not preserved by default", {
 })
 
 test_that("rownames preserved with row.names = TRUE", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   df <- data.frame(x = 1:10)
@@ -78,7 +78,7 @@ test_that("rownames preserved with row.names = TRUE", {
 })
 
 test_that("commas in fields are preserved", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   df <- data.frame(
@@ -90,7 +90,7 @@ test_that("commas in fields are preserved", {
 })
 
 test_that("NAs preserved in factors", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   df <- data.frame(x = 1:10, y = factor(LETTERS[1:10]))
@@ -103,7 +103,7 @@ test_that("NAs preserved in factors", {
 })
 
 test_that("logical converted to int", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   local <- data.frame(x = 1:3, y = c(NA, TRUE, FALSE))
@@ -114,7 +114,7 @@ test_that("logical converted to int", {
 })
 
 test_that("can roundtrip special field names", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   local <- data.frame(x = 1:3, select = 1:3, `  ` = 1:3, check.names = FALSE)
@@ -127,7 +127,7 @@ test_that("can roundtrip special field names", {
 # From file -------------------------------------------------------------------
 
 test_that("comments are preserved", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   tmp_file <- tempfile()
@@ -140,7 +140,7 @@ test_that("comments are preserved", {
 })
 
 test_that("colclasses overridden by argument", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   tmp_file <- tempfile()
@@ -160,7 +160,7 @@ test_that("colclasses overridden by argument", {
 })
 
 test_that("options work", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   expected <- data.frame(
@@ -180,7 +180,7 @@ test_that("options work", {
 
 test_that("temporary works", {
   db_file <- tempfile(fileext = ".sqlite")
-  con <- dbConnect(SQLite(), db_file)
+  con <- dbConnect(SQLCipher(), db_file)
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbWriteTable(con, "prm", "dat-n.txt", sep = "|", eol = "\n", overwrite = TRUE)
@@ -188,7 +188,7 @@ test_that("temporary works", {
   expect_true(dbExistsTable(con, "prm"))
   expect_true(dbExistsTable(con, "tmp"))
 
-  con2 <- dbConnect(SQLite(), db_file)
+  con2 <- dbConnect(SQLCipher(), db_file)
   on.exit(dbDisconnect(con2), add = TRUE)
 
   expect_true(dbExistsTable(con2, "prm"))
@@ -196,7 +196,7 @@ test_that("temporary works", {
 })
 
 test_that("works within transaction", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   df <- data.frame(
@@ -219,7 +219,7 @@ test_that("works within transaction", {
 # Append ------------------------------------------------------------------
 
 test_that("appending to table ignores column order and column names", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbWriteTable(con, "a", data.frame(a = 1, b = 2))
@@ -234,7 +234,7 @@ test_that("appending to table ignores column order and column names", {
 })
 
 test_that("appending to table gives error if fewer columns", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbWriteTable(con, "a", data.frame(a = 1, b = 2))
@@ -246,7 +246,7 @@ test_that("appending to table gives error if fewer columns", {
 })
 
 test_that("appending to table gives error if more columns", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbWriteTable(con, "a", data.frame(a = 1, b = 2))
@@ -261,7 +261,7 @@ test_that("appending to table gives error if more columns", {
 # Row names ---------------------------------------------------------------
 
 test_that("dbWriteTable(row.names = 0)", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   expect_warning(dbWriteTable(con, "mtcars", mtcars, row.names = 0))
@@ -274,7 +274,7 @@ test_that("dbWriteTable(row.names = 0)", {
 
 test_that("dbWriteTable(row.names = 1)", {
   memoise::forget(warning_once)
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   expect_warning(dbWriteTable(con, "mtcars", mtcars, row.names = 1))
@@ -284,7 +284,7 @@ test_that("dbWriteTable(row.names = 1)", {
 })
 
 test_that("dbWriteTable(row.names = FALSE)", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbWriteTable(con, "mtcars", mtcars, row.names = FALSE)
@@ -296,7 +296,7 @@ test_that("dbWriteTable(row.names = FALSE)", {
 })
 
 test_that("dbWriteTable(row.names = TRUE)", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbWriteTable(con, "mtcars", mtcars, row.names = TRUE)
@@ -306,7 +306,7 @@ test_that("dbWriteTable(row.names = TRUE)", {
 })
 
 test_that("dbWriteTable(iris, row.names = NA)", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbWriteTable(con, "iris", iris, row.names = NA)
@@ -318,7 +318,7 @@ test_that("dbWriteTable(iris, row.names = NA)", {
 })
 
 test_that("dbWriteTable(mtcars, row.names = NA)", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbWriteTable(con, "mtcars", mtcars, row.names = NA)
@@ -328,7 +328,7 @@ test_that("dbWriteTable(mtcars, row.names = NA)", {
 })
 
 test_that("dbWriteTable(iris, row.names = 'rn')", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbWriteTable(con, "iris", iris, row.names = "rn")
@@ -344,7 +344,7 @@ test_that("dbWriteTable(iris, row.names = 'rn')", {
 })
 
 test_that("dbWriteTable(mtcars, row.names = 'rn')", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbWriteTable(con, "mtcars", mtcars, row.names = "rn")
@@ -357,7 +357,7 @@ test_that("dbWriteTable(mtcars, row.names = 'rn')", {
 # AsIs --------------------------------------------------------------------
 
 test_that("dbWriteTable with AsIs character fields", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   dbWriteTable(con, "a", data.frame(a = I(letters)))
@@ -367,7 +367,7 @@ test_that("dbWriteTable with AsIs character fields", {
 })
 
 test_that("dbWriteTable with AsIs numeric fields", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   dbWriteTable(con, "a", data.frame(a = I(1:3)))
@@ -377,7 +377,7 @@ test_that("dbWriteTable with AsIs numeric fields", {
 })
 
 test_that("dbWriteTable with AsIs list fields", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   dbWriteTable(con, "a", data.frame(a = I(list(as.raw(1:3), as.raw(4:5)))))
@@ -389,7 +389,7 @@ test_that("dbWriteTable with AsIs list fields", {
 })
 
 test_that("dbWriteTable with AsIs raw fields", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   expect_warning(

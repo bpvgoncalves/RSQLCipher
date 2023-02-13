@@ -7,7 +7,7 @@ default_skip <-
 
 if (packageVersion("DBItest") >= "1.6.0") {
   DBItest::make_context(
-    SQLite(),
+    SQLCipher(),
     list(dbname = tempfile("DBItest", fileext = ".sqlite")),
     tweaks = DBItest::tweaks(
       dbitest_version = "1.7.2",
@@ -26,7 +26,7 @@ if (packageVersion("DBItest") >= "1.6.0") {
   )
 } else {
   DBItest::make_context(
-    SQLite(),
+    SQLCipher(),
     list(dbname = tempfile("DBItest", fileext = ".sqlite")),
     tweaks = DBItest::tweaks(
       constructor_relax_args = TRUE,

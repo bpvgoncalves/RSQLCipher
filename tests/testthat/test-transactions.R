@@ -1,7 +1,7 @@
 test_that("autocommit", {
   db_file <- tempfile("transactions", fileext = ".sqlite")
-  con <- dbConnect(SQLite(), db_file)
-  con2 <- dbConnect(SQLite(), db_file)
+  con <- dbConnect(SQLCipher(), db_file)
+  con2 <- dbConnect(SQLCipher(), db_file)
   on.exit(
     {
       dbDisconnect(con)
@@ -16,8 +16,8 @@ test_that("autocommit", {
 
 test_that("commit unnamed transactions", {
   db_file <- tempfile("transactions", fileext = ".sqlite")
-  con <- dbConnect(SQLite(), db_file)
-  con2 <- dbConnect(SQLite(), db_file)
+  con <- dbConnect(SQLCipher(), db_file)
+  con2 <- dbConnect(SQLCipher(), db_file)
   on.exit(
     {
       dbDisconnect(con)
@@ -41,8 +41,8 @@ test_that("commit unnamed transactions", {
 
 test_that("rollback unnamed transactions", {
   db_file <- tempfile("transactions", fileext = ".sqlite")
-  con <- dbConnect(SQLite(), db_file)
-  con2 <- dbConnect(SQLite(), db_file)
+  con <- dbConnect(SQLCipher(), db_file)
+  con2 <- dbConnect(SQLCipher(), db_file)
   on.exit(
     {
       dbDisconnect(con)
@@ -66,8 +66,8 @@ test_that("rollback unnamed transactions", {
 
 test_that("no nested unnamed transactions (commit after error)", {
   db_file <- tempfile("transactions", fileext = ".sqlite")
-  con <- dbConnect(SQLite(), db_file)
-  con2 <- dbConnect(SQLite(), db_file)
+  con <- dbConnect(SQLCipher(), db_file)
+  con2 <- dbConnect(SQLCipher(), db_file)
   on.exit(
     {
       dbDisconnect(con)
@@ -87,8 +87,8 @@ test_that("no nested unnamed transactions (commit after error)", {
 
 test_that("no nested unnamed transactions (rollback after error)", {
   db_file <- tempfile("transactions", fileext = ".sqlite")
-  con <- dbConnect(SQLite(), db_file)
-  con2 <- dbConnect(SQLite(), db_file)
+  con <- dbConnect(SQLCipher(), db_file)
+  con2 <- dbConnect(SQLCipher(), db_file)
   on.exit(
     {
       dbDisconnect(con)
@@ -108,8 +108,8 @@ test_that("no nested unnamed transactions (rollback after error)", {
 
 test_that("commit named transactions", {
   db_file <- tempfile("transactions", fileext = ".sqlite")
-  con <- dbConnect(SQLite(), db_file)
-  con2 <- dbConnect(SQLite(), db_file)
+  con <- dbConnect(SQLCipher(), db_file)
+  con2 <- dbConnect(SQLCipher(), db_file)
   on.exit(
     {
       dbDisconnect(con)
@@ -133,8 +133,8 @@ test_that("commit named transactions", {
 
 test_that("rollback named transactions", {
   db_file <- tempfile("transactions", fileext = ".sqlite")
-  con <- dbConnect(SQLite(), db_file)
-  con2 <- dbConnect(SQLite(), db_file)
+  con <- dbConnect(SQLCipher(), db_file)
+  con2 <- dbConnect(SQLCipher(), db_file)
   on.exit(
     {
       dbDisconnect(con)
@@ -159,8 +159,8 @@ test_that("rollback named transactions", {
 
 test_that("nested named transactions (commit - commit)", {
   db_file <- tempfile("transactions", fileext = ".sqlite")
-  con <- dbConnect(SQLite(), db_file)
-  con2 <- dbConnect(SQLite(), db_file)
+  con <- dbConnect(SQLCipher(), db_file)
+  con2 <- dbConnect(SQLCipher(), db_file)
   on.exit(
     {
       dbDisconnect(con)
@@ -197,8 +197,8 @@ test_that("nested named transactions (commit - commit)", {
 
 test_that("nested named transactions (commit - rollback)", {
   db_file <- tempfile("transactions", fileext = ".sqlite")
-  con <- dbConnect(SQLite(), db_file)
-  con2 <- dbConnect(SQLite(), db_file)
+  con <- dbConnect(SQLCipher(), db_file)
+  con2 <- dbConnect(SQLCipher(), db_file)
   on.exit(
     {
       dbDisconnect(con)
@@ -235,8 +235,8 @@ test_that("nested named transactions (commit - rollback)", {
 
 test_that("nested named transactions (rollback - commit)", {
   db_file <- tempfile("transactions", fileext = ".sqlite")
-  con <- dbConnect(SQLite(), db_file)
-  con2 <- dbConnect(SQLite(), db_file)
+  con <- dbConnect(SQLCipher(), db_file)
+  con2 <- dbConnect(SQLCipher(), db_file)
   on.exit(
     {
       dbDisconnect(con)
@@ -273,8 +273,8 @@ test_that("nested named transactions (rollback - commit)", {
 
 test_that("nested named transactions (rollback - rollback)", {
   db_file <- tempfile("transactions", fileext = ".sqlite")
-  con <- dbConnect(SQLite(), db_file)
-  con2 <- dbConnect(SQLite(), db_file)
+  con <- dbConnect(SQLCipher(), db_file)
+  con2 <- dbConnect(SQLCipher(), db_file)
   on.exit(
     {
       dbDisconnect(con)
@@ -311,8 +311,8 @@ test_that("nested named transactions (rollback - rollback)", {
 
 test_that("named transactions with keywords", {
   db_file <- tempfile("transactions", fileext = ".sqlite")
-  con <- dbConnect(SQLite(), db_file)
-  con2 <- dbConnect(SQLite(), db_file)
+  con <- dbConnect(SQLCipher(), db_file)
+  con2 <- dbConnect(SQLCipher(), db_file)
   on.exit(
     {
       dbDisconnect(con)

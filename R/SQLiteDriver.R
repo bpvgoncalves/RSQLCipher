@@ -5,7 +5,7 @@ NULL
 
 #' Class SQLiteDriver (and methods)
 #'
-#' SQLiteDriver objects are created by [SQLite()], and used to select the
+#' SQLiteDriver objects are created by [SQLCipher()], and used to select the
 #' correct method in [dbConnect()].
 #' They are a superclass of the [DBIDriver-class] class,
 #' and used purely for dispatch.

@@ -14,7 +14,7 @@
 #'
 #' dbDisconnect(db)
 datasetsDb <- function() {
-  dbConnect(SQLite(), system.file("db", "datasets.sqlite", package = "RSQLCipher"),
+  dbConnect(SQLCipher(), system.file("db", "datasets.sqlite", package = "RSQLCipher"),
     flags = SQLITE_RO
   )
 }

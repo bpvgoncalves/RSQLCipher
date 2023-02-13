@@ -1,5 +1,5 @@
 bind_select_setup <- function() {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
 
   df <- data.frame(
     id = letters[1:5],
@@ -13,7 +13,7 @@ bind_select_setup <- function() {
 }
 
 test_that("attempting to change schema with pending rows generates warning", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   df <- data.frame(a = letters, b = LETTERS, c = 1:26, stringsAsFactors = FALSE)
@@ -33,7 +33,7 @@ test_that("attempting to change schema with pending rows generates warning", {
 
 test_that("simple position binding works", {
   memoise::forget(warning_once)
-  con <- dbConnect(SQLite(), ":memory:")
+  con <- dbConnect(SQLCipher(), ":memory:")
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbWriteTable(con, "t1", data.frame(x = 1, y = 2))
@@ -55,7 +55,7 @@ test_that("simple named binding works", {
   `%>%` <- magrittr::`%>%`
 
   memoise::forget(warning_once)
-  con <- dbConnect(SQLite(), ":memory:")
+  con <- dbConnect(SQLCipher(), ":memory:")
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbWriteTable(con, "t1", data.frame(x = 1, y = 2))
@@ -72,7 +72,7 @@ test_that("simple named binding works", {
 test_that("named binding errors if missing name", {
   `%>%` <- magrittr::`%>%`
 
-  con <- dbConnect(SQLite(), ":memory:")
+  con <- dbConnect(SQLCipher(), ":memory:")
   dbWriteTable(con, "t1", data.frame(x = 1, y = 2))
   on.exit(dbDisconnect(con), add = TRUE)
 
@@ -163,7 +163,7 @@ test_that("NA matches NULL", {
 })
 
 test_that("mark UTF-8 encoding on non-ASCII colnames", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
   cn_field <- "\u4e2d\u6587"
   tbl <- data.frame("a")

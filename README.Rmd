@@ -42,7 +42,7 @@ The website [Databases using R](https://db.rstudio.com/) describes the tools and
 ```{r}
 library(DBI)
 # Create an ephemeral in-memory RSQLite database
-con <- dbConnect(RSQLCipher::SQLite(), ":memory:")
+con <- dbConnect(RSQLCipher::SQLCipher(), ":memory:")
 
 dbListTables(con)
 dbWriteTable(con, "mtcars", mtcars)

@@ -42,7 +42,7 @@
 #' Similarly, if the key column is not present in the data frame, all
 #' elements are automatically assigned a value.
 #' @examples
-#' con <- dbConnect(SQLite())
+#' con <- dbConnect(SQLCipher())
 #' dbWriteTable(con, "mtcars", mtcars)
 #' dbReadTable(con, "mtcars")
 #'
