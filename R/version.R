@@ -6,5 +6,5 @@
 #'   RSQLite.
 #' @export
 #' @examples
-#' RSQLite::rsqliteVersion()
+#' RSQLCipher::rsqliteVersion()
 rsqliteVersion <- rsqliteVersion

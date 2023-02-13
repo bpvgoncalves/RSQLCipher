@@ -6,7 +6,7 @@
 #' @rdname keywords-dep
 #' @usage NULL
 make.db.names_SQLiteConnection_character <- function(dbObj, snames, keywords, unique, allow.keywords, ...) {
-  warning_once("RSQLite::make.db.names() is deprecated, please switch to DBI::dbQuoteIdentifier().")
+  warning_once("RSQLCipher::make.db.names() is deprecated, please switch to DBI::dbQuoteIdentifier().")
   make.db.names.default(snames, keywords, unique, allow.keywords)
 }
 #' @rdname keywords-dep

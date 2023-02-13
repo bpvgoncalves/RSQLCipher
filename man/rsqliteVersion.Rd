@@ -14,5 +14,5 @@ RSQLite.
 Return the version of RSQLite.
 }
 \examples{
-RSQLite::rsqliteVersion()
+RSQLCipher::rsqliteVersion()
 }

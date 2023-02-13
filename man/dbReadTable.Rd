@@ -52,7 +52,7 @@ primitive data, e.g., it does not coerce character data to factors.
 }
 \examples{
 library(DBI)
-db <- RSQLite::datasetsDb()
+db <- RSQLCipher::datasetsDb()
 dbReadTable(db, "mtcars")
 dbReadTable(db, "mtcars", row.names = FALSE)
 dbDisconnect(db)

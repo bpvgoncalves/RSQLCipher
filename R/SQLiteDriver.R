@@ -1,4 +1,4 @@
-#' @useDynLib RSQLite, .registration = TRUE
+#' @useDynLib RSQLCipher, .registration = TRUE
 #' @importFrom bit64 integer64 is.integer64
 #' @importFrom blob blob
 NULL

@@ -2,7 +2,7 @@
 #' @param bind.data A data frame of data to be bound.
 #' @usage NULL
 dbSendPreparedQuery_SQLiteConnection_character_data.frame <- function(conn, statement, bind.data, ...) {
-  warning_once("RSQLite::dbSendPreparedQuery() is deprecated, please switch to DBI::dbSendQuery(params = bind.data).")
+  warning_once("RSQLCipher::dbSendPreparedQuery() is deprecated, please switch to DBI::dbSendQuery(params = bind.data).")
 
   res <- dbSendQuery(conn, statement)
 

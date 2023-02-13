@@ -1,7 +1,7 @@
 #' @rdname SQLiteResult-class
 #' @usage NULL
 dbFetch_SQLiteResult <- function(res, n = -1, ...,
-                                 row.names = pkgconfig::get_config("RSQLite::row.names.query", FALSE)) {
+                                 row.names = pkgconfig::get_config("RSQLCipher::row.names.query", FALSE)) {
   row.names <- compatRowNames(row.names)
   if (length(n) != 1) stopc("`n` must be scalar")
   if (n < -1) stopc("`n` must be nonnegative or -1")

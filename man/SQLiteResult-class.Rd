@@ -37,7 +37,7 @@
   res,
   n = -1,
   ...,
-  row.names = pkgconfig::get_config("RSQLite::row.names.query", FALSE)
+  row.names = pkgconfig::get_config("RSQLCipher::row.names.query", FALSE)
 )
 
 \S4method{dbGetRowCount}{SQLiteResult}(res, ...)

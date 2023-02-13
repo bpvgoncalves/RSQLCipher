@@ -18,9 +18,9 @@ NULL
 #' @aliases dbBuildTableDefinition
 #' @export
 sqliteBuildTableDefinition <- function(con, name, value, field.types = NULL,
-                                       row.names = pkgconfig::get_config("RSQLite::row.names.query", FALSE)) {
+                                       row.names = pkgconfig::get_config("RSQLCipher::row.names.query", FALSE)) {
 
-  warning_once("RSQLite::sqliteBuildTableDefinition() is deprecated, please switch to DBI::sqlCreateTable().")
+  warning_once("RSQLCipher::sqliteBuildTableDefinition() is deprecated, please switch to DBI::sqlCreateTable().")
   row.names <- compatRowNames(row.names)
 
   if (!is.data.frame(value)) {
@@ -43,7 +43,7 @@ sqliteBuildTableDefinition <- function(con, name, value, field.types = NULL,
 
 #' @export
 dbBuildTableDefinition <- function(...) {
-  warning_once("RSQLite::dbBuildTableDefinition() is deprecated, please switch to DBI::sqlCreateTable().")
+  warning_once("RSQLCipher::dbBuildTableDefinition() is deprecated, please switch to DBI::sqlCreateTable().")
   sqliteBuildTableDefinition(...)
 }
 

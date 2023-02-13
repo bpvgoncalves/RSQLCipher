@@ -23,7 +23,7 @@
 #' @rdname dbReadTable
 #' @examples
 #' library(DBI)
-#' db <- RSQLite::datasetsDb()
+#' db <- RSQLCipher::datasetsDb()
 #' dbReadTable(db, "mtcars")
 #' dbReadTable(db, "mtcars", row.names = FALSE)
 #' dbDisconnect(db)

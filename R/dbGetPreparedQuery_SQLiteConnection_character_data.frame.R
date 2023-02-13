@@ -1,7 +1,7 @@
 #' @rdname query-dep
 #' @usage NULL
 dbGetPreparedQuery_SQLiteConnection_character_data.frame <- function(conn, statement, bind.data, ...) {
-  warning_once("RSQLite::dbGetPreparedQuery() is deprecated, please switch to DBI::dbGetQuery(params = bind.data).")
+  warning_once("RSQLCipher::dbGetPreparedQuery() is deprecated, please switch to DBI::dbGetQuery(params = bind.data).")
 
   res <- dbSendQuery(conn, statement)
   on.exit(dbClearResult(res), add = TRUE)
