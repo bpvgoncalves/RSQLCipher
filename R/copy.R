@@ -15,7 +15,7 @@
 #' @examples
 #' library(DBI)
 #' # Copy the built in databaseDb() to an in-memory database
-#' con <- dbConnect(RSQLCipher::SQLite(), ":memory:")
+#' con <- dbConnect(RSQLCipher::SQLCipher(), ":memory:")
 #' dbListTables(con)
 #'
 #' db <- RSQLCipher::datasetsDb()
@@ -29,7 +29,7 @@ sqliteCopyDatabase <- function(from, to) {
     stop("'from' must be a SQLiteConnection object")
   }
   if (is.character(to)) {
-    to <- dbConnect(SQLite(), to)
+    to <- dbConnect(SQLCipher(), to)
     on.exit(dbDisconnect(to), add = TRUE)
   }
   if (!is(to, "SQLiteConnection")) {

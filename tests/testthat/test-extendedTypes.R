@@ -1,5 +1,5 @@
 test_that("Can read dates", {
-  con <- dbConnect(SQLite(), extended_types = TRUE)
+  con <- dbConnect(SQLCipher(), extended_types = TRUE)
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbExecute(con, "drop table if exists t1")
@@ -11,7 +11,7 @@ test_that("Can read dates", {
 })
 
 test_that("Can read datetime", {
-  con <- dbConnect(SQLite(), extended_types = TRUE)
+  con <- dbConnect(SQLCipher(), extended_types = TRUE)
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbExecute(con, "drop table if exists t1")
@@ -27,7 +27,7 @@ test_that("Can read datetime", {
 
 
 test_that("Can read time", {
-  con <- dbConnect(SQLite(), extended_types = TRUE)
+  con <- dbConnect(SQLCipher(), extended_types = TRUE)
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbExecute(con, "drop table if exists t1")
@@ -43,7 +43,7 @@ test_that("Can read time", {
 
 
 test_that("Columninfo dates", {
-  con <- dbConnect(SQLite(), extended_types = TRUE)
+  con <- dbConnect(SQLCipher(), extended_types = TRUE)
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbExecute(con, "drop table if exists t1")
@@ -57,7 +57,7 @@ test_that("Columninfo dates", {
 })
 
 test_that("Columninfo datetime", {
-  con <- dbConnect(SQLite(), extended_types = TRUE)
+  con <- dbConnect(SQLCipher(), extended_types = TRUE)
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbExecute(con, "drop table if exists t1")
@@ -73,7 +73,7 @@ test_that("Columninfo datetime", {
 
 
 test_that("Columninfo time", {
-  con <- dbConnect(SQLite(), extended_types = TRUE)
+  con <- dbConnect(SQLCipher(), extended_types = TRUE)
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbExecute(con, "drop table if exists t1")
@@ -89,7 +89,7 @@ test_that("Columninfo time", {
 
 
 test_that("Blob as dates", {
-  con <- dbConnect(SQLite(), extended_types = TRUE)
+  con <- dbConnect(SQLCipher(), extended_types = TRUE)
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbExecute(con, "drop table if exists t1")
@@ -101,7 +101,7 @@ test_that("Blob as dates", {
 })
 
 test_that("Blob as datetime", {
-  con <- dbConnect(SQLite(), extended_types = TRUE)
+  con <- dbConnect(SQLCipher(), extended_types = TRUE)
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbExecute(con, "drop table if exists t1")
@@ -114,7 +114,7 @@ test_that("Blob as datetime", {
 
 
 test_that("Blob as time", {
-  con <- dbConnect(SQLite(), extended_types = TRUE)
+  con <- dbConnect(SQLCipher(), extended_types = TRUE)
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbExecute(con, "drop table if exists t1")
@@ -127,7 +127,7 @@ test_that("Blob as time", {
 
 
 test_that("roundtrip extended_types with dbWriteTable", {
-  con <- dbConnect(SQLite(), extended_types = TRUE)
+  con <- dbConnect(SQLCipher(), extended_types = TRUE)
   on.exit(dbDisconnect(con), add = TRUE)
 
   dates_times <- data.frame(

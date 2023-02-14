@@ -22,7 +22,7 @@ NULL
 #' @param .name For backward compatibility, do not use.
 #' @examples
 #' library(DBI)
-#' con <- dbConnect(SQLite(), ":memory:")
+#' con <- dbConnect(SQLCipher(), ":memory:")
 #' dbWriteTable(con, "arrests", datasets::USArrests)
 #' dbGetQuery(con, "select count(*) from arrests")
 #'

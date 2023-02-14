@@ -39,7 +39,7 @@ auto-commit on.
 }
 \examples{
 library(DBI)
-con <- dbConnect(SQLite(), ":memory:")
+con <- dbConnect(SQLCipher(), ":memory:")
 dbWriteTable(con, "arrests", datasets::USArrests)
 dbGetQuery(con, "select count(*) from arrests")
 

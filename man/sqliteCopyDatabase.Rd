@@ -22,7 +22,7 @@ a copy of another database.
 \examples{
 library(DBI)
 # Copy the built in databaseDb() to an in-memory database
-con <- dbConnect(RSQLCipher::SQLite(), ":memory:")
+con <- dbConnect(RSQLCipher::SQLCipher(), ":memory:")
 dbListTables(con)
 
 db <- RSQLCipher::datasetsDb()

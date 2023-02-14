@@ -1,5 +1,5 @@
 test_that("passing field.types", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   dbWriteTable(con, "a", data.frame(a = 1:3), field.types = c("a" = "TEXT"))
@@ -9,7 +9,7 @@ test_that("passing field.types", {
 })
 
 test_that("passing field.types for some columns only", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   dbWriteTable(con, "a", data.frame(a = 1:3, b = 4:6), field.types = c("a" = "TEXT"))
@@ -20,7 +20,7 @@ test_that("passing field.types for some columns only", {
 })
 
 test_that("passing field.types with wrong name", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   expect_error(
@@ -30,7 +30,7 @@ test_that("passing field.types with wrong name", {
 })
 
 test_that("passing field.types with primary key information", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   dbWriteTable(con, "a", data.frame(a = 1:3), field.types = c("a" = "INTEGER PRIMARY KEY"))
@@ -40,7 +40,7 @@ test_that("passing field.types with primary key information", {
 })
 
 test_that("passing field.types with primary key information and non-unique values", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   expect_error(
@@ -50,7 +50,7 @@ test_that("passing field.types with primary key information and non-unique value
 })
 
 test_that("combining numeric types and NA to integer64 (#291)", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   x1 <- data.frame(a = c(1L, NA))
@@ -65,7 +65,7 @@ test_that("combining numeric types and NA to integer64 (#291)", {
 })
 
 test_that("combining numeric types and NA to numeric (#291)", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con))
 
   x1 <- data.frame(a = c(1L, NA))

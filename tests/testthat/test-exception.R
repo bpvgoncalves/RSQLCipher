@@ -1,5 +1,5 @@
 test_that("no exception upon start", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   expect_warning(ex <- dbGetException(con), "deprecated")
@@ -9,7 +9,7 @@ test_that("no exception upon start", {
 
 test_that("no exception after good query", {
   memoise::forget(warning_once)
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbGetQuery(con, "SELECT 1")
@@ -21,7 +21,7 @@ test_that("no exception after good query", {
 
 test_that("exception after bad query", {
   memoise::forget(warning_once)
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   expect_error(dbExecute(con, "RAISE"))
@@ -33,7 +33,7 @@ test_that("exception after bad query", {
 
 test_that("no exception after good statement sent", {
   memoise::forget(warning_once)
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   rs <- dbSendQuery(con, "SELECT 1")
@@ -46,7 +46,7 @@ test_that("no exception after good statement sent", {
 
 test_that("no exception after good statement sent and partially collected", {
   memoise::forget(warning_once)
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   rs <- dbSendQuery(con, "SELECT 1 UNION SELECT 2")
@@ -60,7 +60,7 @@ test_that("no exception after good statement sent and partially collected", {
 
 test_that("exception after bad statement sent", {
   memoise::forget(warning_once)
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   expect_error(dbSendQuery(con, "RAISE"), "syntax error")

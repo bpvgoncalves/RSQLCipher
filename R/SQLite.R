@@ -2,11 +2,11 @@
 #' @include SQLiteDriver.R
 NULL
 
-#' Connect to an SQLite database
+#' Connect to an encrypted SQLite database
 #'
-#' Together, `SQLite()` and `dbConnect()` allow you to connect to
-#' a SQLite database file. See [DBI::dbSendQuery()] for how to issue queries
-#' and receive results.
+#' Together, `SQLCipher()` and `dbConnect()` allow you to connect to an
+#' encrypted SQLite database file. See [DBI::dbSendQuery()] for how to issue
+#' queries and receive results.
 #'
 #' Connections are automatically cleaned-up after they're deleted and
 #' reclaimed by the GC. You can use [DBI::dbDisconnect()] to terminate the
@@ -17,14 +17,14 @@ NULL
 #' The corresponding generic functions [DBI::dbConnect()] and [DBI::dbDisconnect()].
 #'
 #' @export
-#' @param ... In previous versions, `SQLite()` took arguments. These
+#' @param ... In previous versions, `SQLCipher()` took arguments. These
 #'   have now all been moved to [dbConnect()], and any arguments here
 #'   will be ignored with a warning.
 #'
-#' @return `SQLite()` returns an object of class [SQLiteDriver-class].
+#' @return `SQLCipher()` returns an object of class [SQLiteDriver-class].
 #' @import methods DBI
-#' @aliases RSQLite RSQLite-package
-SQLite <- function(...) {
+#' @aliases RSQLCipher RSQLCipher-package
+SQLCipher <- function(...) {
   if (nargs() > 0) {
     warning("All arguments to RSQLite Driver are ignored.", call. = FALSE)
   }

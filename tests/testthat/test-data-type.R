@@ -1,5 +1,5 @@
 sqliteDataType <- function(x) {
-  dbDataType(SQLite(), x)
+  dbDataType(SQLCipher(), x)
 }
 
 # Specific to RSQLite

@@ -1,6 +1,6 @@
 #' Class SQLiteConnection (and methods)
 #'
-#' SQLiteConnection objects are created by passing [SQLite()] as first
+#' SQLiteConnection objects are created by passing [SQLCipher()] as first
 #' argument to [DBI::dbConnect()].
 #' They are a superclass of the [DBIConnection-class] class.
 #' The "Usage" section lists the class methods overridden by \pkg{RSQLite}.
@@ -122,6 +122,23 @@ sqliteSetBusyHandler <- function(dbObj, handler) {
       is.function(handler) ||
       (is.numeric(handler) && length(handler) == 1 && !is.na(handler))
   )
-  if (is.numeric(handler)) handler <- as.integer(handler)
-  set_busy_handler(dbObj@ptr, handler)
+  if (is.numeric(handler)) {
+    raw_handler <- as.integer(handler)
+  } else if (is.function(handler)) {
+    raw_handler <- function(...) {
+      tryCatch(
+        handler(...),
+        interrupt = function(e) {
+          0L
+        },
+        error = function(e) {
+          0L
+        }
+      )
+    }
+  } else {
+    raw_handler <- handler
+  }
+
+  set_busy_handler(dbObj@ptr, raw_handler)
 }
