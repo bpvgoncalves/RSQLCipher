@@ -2,7 +2,7 @@ test_that("adding large blob to table survives valgrind check (#192)", {
   # Requires 64-bit system
   skip_on_appveyor()
 
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   data <- data.frame(id = 1, data = I(list(raw(1e8))))
@@ -23,7 +23,7 @@ test_that("can read more than standard limit (#314)", {
   # Easy on CRAN's infrastructure
   skip_on_cran()
 
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbWriteTable(con, "data", data.frame(id = 1, data = blob(raw(1e9 + 1))))
@@ -35,7 +35,7 @@ test_that("can read more than standard limit (#314)", {
 })
 
 test_that("blob class", {
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   data <- data.frame(id = 1, data = blob(raw(1e3)))

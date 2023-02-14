@@ -1,5 +1,5 @@
 test_that("sd for multiple and single values", {
-  con <- dbConnect(SQLite(), ":memory:")
+  con <- dbConnect(SQLCipher(), ":memory:")
   on.exit(dbDisconnect(con))
   initExtension(con)
 

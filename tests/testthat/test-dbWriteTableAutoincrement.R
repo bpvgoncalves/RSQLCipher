@@ -6,7 +6,7 @@ sql_ddl <- "CREATE TABLE `tbl` (
 
 create_and_compare_table <- function(d_local, expected_remote_id) {
   # Create a connection, create a table, and populate the table.
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbExecute(con, sql_ddl)
@@ -108,7 +108,7 @@ test_that("autoincrement partially populated with duplicate IDs throws an error"
     stringsAsFactors = FALSE
   )
 
-  con <- dbConnect(SQLite())
+  con <- dbConnect(SQLCipher())
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbExecute(con, sql_ddl)
