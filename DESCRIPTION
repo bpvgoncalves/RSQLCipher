@@ -2,11 +2,16 @@ Package: RSQLCipher
 Title: SQLCipher Interface for R
 Version: 0.0.0.9003
 Authors@R: c(
+    person("Bruno", "Gonçalves", , "bpvgoncalves@users.noreply.github.com", role = "aut",
+           comment = c(ORCID = "0000-0002-0797-7717")),
     person("Kirill", "Müller", , "kirill@cynkra.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-1416-3412")),
-    person("Hadley", "Wickham", role = "aut"),
-    person(c("David", "A."), "James", role = "aut"),
-    person("Seth", "Falcon", role = "aut"),
+           comment = c(ORCID = "0000-0002-1416-3412", code = "RSQLite sources")),
+    person("Hadley", "Wickham", role = "aut",
+           comment = c(code = "RSQLite sources")),
+    person(c("David", "A."), "James", role = "aut",
+           comment = c(code = "RSQLite sources")),
+    person("Seth", "Falcon", role = "aut",
+           comment = c(code = "RSQLite sources")),
     person("D. Richard", "Hipp", role = "ctb",
            comment = "for the included SQLite sources"),
     person("Dan", "Kennedy", role = "ctb",
@@ -18,19 +23,21 @@ Authors@R: c(
     person("Liam", "Healy", role = "ctb",
            comment = "for the included SQLite sources"),
     person("R Consortium", role = "fnd"),
-    person(, "RStudio", role = "cph")
+    person("RStudio", role = "cph"),
+    person("ZETETIC LLC", role = "cph",
+           comment = c(code = "SQLCipher sources"))
   )
 Description: Embeds the SQLCipher database engine in R and provides an
-    interface compliant with the DBI package.  SQLCipher is an open source 
-    library that provides transparent and secure 256-bit AES encryption of 
-    SQLite database files. The source for the SQLCipher/SQLite engine and for
-    various extensions in a recent version is included.  System libraries will
-    never be consulted because this package relies on static linking for the 
-    plugins it includes; this also ensures a consistent experience across all 
-    installations.
+    interface compliant with the DBI package. SQLCipher is an open source
+    library that provides transparent and secure 256-bit AES encryption of
+    SQLite database files. The source for the SQLCipher/SQLite engine and
+    for various extensions in a recent version is included.  System
+    libraries will never be consulted because this package relies on
+    static linking for the plugins it includes; this also ensures a
+    consistent experience across all installations.
 License: LGPL (>= 2.1)
-URL: https://rsqlite.r-dbi.org, https://github.com/r-dbi/RSQLite
-BugReports: https://github.com/r-dbi/RSQLite/issues
+URL: https://github.com/bpvgoncalves/RSQLCipher
+BugReports: https://github.com/bpvgoncalves/RSQLCipher/issues
 Depends: 
     R (>= 3.1.0)
 Imports: 
@@ -54,8 +61,8 @@ Suggests:
     withr,
     xml2
 LinkingTo: 
-    plogr (>= 0.2.0),
-    cpp11 (>= 0.4.0)
+    cpp11 (>= 0.4.0),
+    plogr (>= 0.2.0)
 VignetteBuilder: 
     knitr
 Config/autostyle/scope: line_breaks
