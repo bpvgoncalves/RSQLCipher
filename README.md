@@ -1,160 +1,125 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# RSQLite
+# RSQLCipher
 
 <!-- badges: start -->
 
 [![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![rcc](https://github.com/r-dbi/RSQLite/workflows/rcc/badge.svg)](https://github.com/r-dbi/RSQLite/actions)
-[![Coverage
-Status](https://codecov.io/gh/r-dbi/RSQLite/branch/master/graph/badge.svg)](https://codecov.io/github/r-dbi/RSQLite?branch=master)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/RSQLite)](https://cran.r-project.org/package=RSQLite)
-[![CII Best
-Practices](https://bestpractices.coreinfrastructure.org/projects/3234/badge)](https://bestpractices.coreinfrastructure.org/projects/3234)
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
 <!-- badges: end -->
 
-Embeds the SQLite database engine in R, providing a DBI-compliant
-interface. [SQLite](https://www.sqlite.org/index.html) is a
-public-domain, single-user, very light-weight database engine that
-implements a decent subset of the SQL 92 standard, including the core
-table creation, updating, insertion, and selection operations, plus
-transaction management.
+Embeds the SQLCipher database engine in R and provides an interface
+compliant with the DBI package.
+[SQLCipher](https://www.zetetic.net/sqlcipher/open-source/) is an open
+source library that provides transparent and secure 256-bit AES
+encryption of SQLite database files.
+[SQLite](https://www.sqlite.org/index.html) is a public-domain,
+single-user, very light-weight database engine that implements a decent
+subset of the SQL 92 standard, including the core table creation,
+updating, insertion, and selection operations, plus transaction
+management.
 
-You can install the latest released version from CRAN with:
+This project started as a fork from the amazing
+[RSQLite](https://rsqlite.r-dbi.org) package for which its authors
+deserve full credit. It is intended to keep this package updated with
+new updates to the RSQLite package to keep both as much compatible as
+possible.
 
-``` r
-install.packages("RSQLite")
-```
+This package allows for the use of regular SQLite database files or
+encrypted ones.
 
-Or install the latest development version from GitHub with:
+<!-- You can install the latest released version from CRAN with: -->
+<!-- ```R -->
+<!-- install.packages("RSQLCipher") -->
+<!-- ``` -->
+
+You can install the latest development version from GitHub with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("r-dbi/RSQLite")
+devtools::install_github("bpvgoncalves/RSQLCipher")
 ```
 
 Discussions associated with DBI and related database packages take place
 on [R-SIG-DB](https://stat.ethz.ch/mailman/listinfo/r-sig-db). The
-website [Databases using R](https://db.rstudio.com/) describes the tools
-and best practices in this ecosystem.
+website [Databases using R](https://solutions.posit.co/connections/db/)
+describes the tools and best practices in this ecosystem.
 
-## Basic usage
+## Usage
+
+This package has identical interface to RSQLite.
 
 ``` r
 library(DBI)
-# Create an ephemeral in-memory RSQLite database
-con <- dbConnect(RSQLCipher::SQLCipher(), ":memory:")
 
-dbListTables(con)
-```
+# Create an two temporary RSQLCipher databases on disk.
+# A regular database and an encrypted one.
+tmp_plain <- tempfile()
+con_plain <- dbConnect(RSQLCipher::SQLCipher(), 
+                       tmp_plain)
 
-    ## character(0)
+tmp_enc <- tempfile()
+con_enc <- dbConnect(RSQLCipher::SQLCipher(), 
+                     tmp_enc, 
+                     key = "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF") 
 
-``` r
-dbWriteTable(con, "mtcars", mtcars)
-dbListTables(con)
-```
+# Both databases behave the same on regular usage...
+dbWriteTable(con_plain, "mtcars", mtcars)
+dbWriteTable(con_enc, "mtcars", mtcars)
 
-    ## [1] "mtcars"
+stopifnot(identical(dbListTables(con_plain), 
+                    dbListTables(con_enc)))
+stopifnot(identical(dbListFields(con_plain, "mtcars"), 
+                    dbListFields(con_enc, "mtcars")))
+stopifnot(identical(dbReadTable(con_plain, "mtcars"), 
+                    dbReadTable(con_enc, "mtcars")))
 
-``` r
-dbListFields(con, "mtcars")
-```
+dbDisconnect(con_plain)
+dbDisconnect(con_enc)
 
-    ##  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear"
-    ## [11] "carb"
-
-``` r
-dbReadTable(con, "mtcars")
-```
-
-    ##     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-    ## 1  21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-    ## 2  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-    ## 3  22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-    ## 4  21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-    ## 5  18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-    ## 6  18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-    ## 7  14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-    ## 8  24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-    ## 9  22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-    ## 10 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-    ## 11 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-    ## 12 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-    ## 13 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-    ## 14 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-    ## 15 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-    ## 16 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-    ## 17 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-    ## 18 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-    ## 19 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-    ## 20 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-    ## 21 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-    ## 22 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-    ## 23 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-    ## 24 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-    ## 25 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
-    ## 26 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-    ## 27 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-    ## 28 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-    ## 29 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-    ## 30 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-    ## 31 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-    ## 32 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
-
-``` r
-# You can fetch all results:
-res <- dbSendQuery(con, "SELECT * FROM mtcars WHERE cyl = 4")
-dbFetch(res)
-```
-
-    ##     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-    ## 1  22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-    ## 2  24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-    ## 3  22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-    ## 4  32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-    ## 5  30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-    ## 6  33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-    ## 7  21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-    ## 8  27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-    ## 9  26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-    ## 10 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-    ## 11 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
-
-``` r
-dbClearResult(res)
-
-# Or a chunk at a time
-res <- dbSendQuery(con, "SELECT * FROM mtcars WHERE cyl = 4")
-while (!dbHasCompleted(res)) {
-  chunk <- dbFetch(res, n = 5)
-  print(nrow(chunk))
+# ... but the database files on disk are different
+if ("hexView" %in% installed.packages()) {
+  cat(">> Plain database\n")
+  print(hexView::readRaw(tmp_plain, nbytes = 128))
+  cat(">> Encrypted database\n")
+  print(hexView::readRaw(tmp_enc, nbytes = 128))
+} else {
+  cat(">> Plain database\n")
+  print(suppressWarnings(readLines(tmp_plain)[1:10]))
+  cat(">> Encrypted database\n")
+  print(suppressWarnings(readLines(tmp_enc)[1:10]))
 }
 ```
 
-    ## [1] 5
-    ## [1] 5
-    ## [1] 1
+    ## >> Plain database
+    ##   0  :  53 51 4c 69 74 65 20 66 6f 72 6d 61 74 20 33 00  |  SQLite format 3.
+    ##  16  :  10 00 01 01 00 40 20 20 00 00 00 01 00 00 00 02  |  .....@  ........
+    ##  32  :  00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 04  |  ................
+    ##  48  :  00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 00  |  ................
+    ##  64  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  |  ................
+    ##  80  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01  |  ................
+    ##  96  :  00 2e 66 ea 0d 00 00 00 01 0f 31 00 0f 31 00 00  |  ..f.......1..1..
+    ## 112  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  |  ................ 
+    ## >> Encrypted database
+    ##   0  :  31 49 1a 02 42 4c fc 11 63 77 c8 e5 4f 5d 2b 2b  |  1I..BL..cw..O]++
+    ##  16  :  b4 bc c6 aa 3d f5 2d 88 ac 8f 88 35 0d a5 08 03  |  ....=.-....5....
+    ##  32  :  66 df 1f a4 60 8a 69 1d 41 11 b4 23 d0 6d 63 9d  |  f...`.i.A..#.mc.
+    ##  48  :  24 48 9b 80 56 f0 e1 ef f9 39 3d 59 9d 8d 9b f0  |  $H..V....9=Y....
+    ##  64  :  3b 1b ed be 46 f1 3b 28 c9 e3 d1 a1 e9 69 4d 49  |  ;...F.;(.....iMI
+    ##  80  :  8d 16 d8 58 6e db 8f 1a 7b be d0 0e 1b da 7d 08  |  ...Xn...{.....}.
+    ##  96  :  fb 81 20 0a ef 85 7e 0d db c2 e6 9b 2a eb 86 a9  |  .. ...~.....*...
+    ## 112  :  0e aa a0 26 00 ae 07 e9 16 4c be d1 3e 71 9a a4  |  ...&.....L..>q..
 
 ``` r
-# Clear the result
-dbClearResult(res)
-
-# Disconnect from the database
-dbDisconnect(con)
+file.remove(tmp_plain)
 ```
 
-## Acknowledgements
+    ## [1] TRUE
 
-Many thanks to Doug Bates, Seth Falcon, Detlef Groth, Ronggui Huang,
-Kurt Hornik, Uwe Ligges, Charles Loboz, Duncan Murdoch, and Brian D.
-Ripley for comments, suggestions, bug reports, and/or patches.
+``` r
+file.remove(tmp_enc)
+```
 
-------------------------------------------------------------------------
-
-Please note that the ‘RSQLite’ project is released with a [Contributor
-Code of Conduct](https://rsqlite.r-dbi.org/code_of_conduct). By
-contributing to this project, you agree to abide by its terms.
+    ## [1] TRUE
