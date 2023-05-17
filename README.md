@@ -7,7 +7,10 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
 [![R-CMD-check](https://github.com/bpvgoncalves/RSQLCipher/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bpvgoncalves/RSQLCipher/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/bpvgoncalves/RSQLCipher/branch/main/graph/badge.svg)](https://app.codecov.io/gh/bpvgoncalves/RSQLCipher?branch=main)
 <!-- badges: end -->
 
 Embeds the SQLCipher database engine in R and provides an interface
@@ -103,14 +106,14 @@ if ("hexView" %in% installed.packages()) {
     ##  96  :  00 2e 66 ea 0d 00 00 00 01 0f 31 00 0f 31 00 00  |  ..f.......1..1..
     ## 112  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  |  ................ 
     ## >> Encrypted database
-    ##   0  :  24 47 ce 76 b3 e0 95 9c 9c 4d eb 10 b9 ab d1 10  |  $G.v.....M......
-    ##  16  :  12 f1 aa 08 e1 05 cb 87 16 eb e7 4e 8c 9d d2 de  |  ...........N....
-    ##  32  :  f1 dc 64 61 25 dc 1f 7e f9 ac fc f4 28 5d fa 6f  |  ..da%..~....(].o
-    ##  48  :  c6 9a 5f f2 2a cb 19 b1 b5 6c 63 a5 b4 86 de 61  |  .._.*....lc....a
-    ##  64  :  6a 74 98 56 5c 0d 69 96 b9 f3 d7 5d a2 1a 20 58  |  jt.V\.i....].. X
-    ##  80  :  0d e0 49 dc c7 fe db 21 8b d7 2f b1 9a 40 b6 37  |  ..I....!../..@.7
-    ##  96  :  86 e0 68 23 f4 c4 e9 8d de 40 c0 43 97 6a ad cb  |  ..h#.....@.C.j..
-    ## 112  :  a8 e6 f9 18 a7 09 94 0a e4 49 56 f2 1f 9b f1 56  |  .........IV....V
+    ##   0  :  99 e9 7c 2a c5 80 d7 4b 69 aa e1 2a 00 f5 ef 81  |  ..|*...Ki..*....
+    ##  16  :  a2 66 d7 13 7c 8f 90 13 bf 1d 24 54 93 0c 8f 72  |  .f..|.....$T...r
+    ##  32  :  6a d3 ef 13 e3 c0 e0 db 43 4d 3c 4e e3 a2 78 c0  |  j.......CM<N..x.
+    ##  48  :  19 d3 d3 6b bc 3f 97 90 2f 86 c5 39 64 84 a1 55  |  ...k.?../..9d..U
+    ##  64  :  bd 2c 19 46 b7 61 9c bb 1c 33 75 6e 55 12 d2 62  |  .,.F.a...3unU..b
+    ##  80  :  1d 93 68 ef 0f b8 cc c3 59 a7 ad 96 4f cc 1e 6d  |  ..h.....Y...O..m
+    ##  96  :  b9 dc 3a 2f f3 d6 f0 ac 8a 09 9a ef 5a 4c f9 28  |  ..:/........ZL.(
+    ## 112  :  98 2c 5c 1d 97 3a 9e 88 6d 7a e0 8a 7c a5 dc 57  |  .,\..:..mz..|..W
 
 ``` r
 file.remove(tmp_plain)

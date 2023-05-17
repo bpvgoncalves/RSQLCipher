@@ -49,6 +49,7 @@ Imports:
     pkgconfig
 Suggests: 
     callr,
+    covr,
     DBItest (>= 1.7.2.9001),
     gert,
     gh,
