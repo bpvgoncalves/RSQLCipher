@@ -31,10 +31,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: Setup OpenSSL
+      - name: Setup OpenSSL (macos)
         if: matrix.config.os == 'macos-latest'
         run: |
-          brew install openssl@1.1
+          brew reinstall openssl@1.1
+     
+      - name: Setup OpenSSL (win)
+        if: matrix.config.os == 'windows-latest'
+        run: |        
+          choco install openssl
 
       - uses: r-lib/actions/setup-pandoc@v2
 
