@@ -125,16 +125,16 @@ test_that("error in busy handler", {
   on.exit(dbDisconnect(con1), add = TRUE)
 
   cb <- function(n) stop("oops")
-  # sqliteSetBusyHandler(con2, cb)
+  sqliteSetBusyHandler(con2, cb)
 
   dbExecute(con1, "BEGIN IMMEDIATE")
-  # expect_error(
-  #   expect_message(
-  #     dbExecute(con2, "BEGIN IMMEDIATE"),
-  #     "Busy callback failed, aborting.*oops"
-  #   ),
-  #   "database is locked"
-  # )
+  expect_error(
+    expect_message(
+      dbExecute(con2, "BEGIN IMMEDIATE"),
+      "Busy callback failed, aborting.*oops"
+    ),
+    "database is locked"
+  )
 
   # con1 is still fine of course
   dbWriteTable(con1, "mtcars", mtcars)

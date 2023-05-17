@@ -1,102 +1,128 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# RSQLite
+# RSQLCipher
 
 <!-- badges: start -->
 
-[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html) [![rcc](https://github.com/r-dbi/RSQLite/workflows/rcc/badge.svg)](https://github.com/r-dbi/RSQLite/actions) [![Coverage Status](https://codecov.io/gh/r-dbi/RSQLite/branch/master/graph/badge.svg)](https://codecov.io/github/r-dbi/RSQLite?branch=master) [![CRAN status](https://www.r-pkg.org/badges/version/RSQLite)](https://cran.r-project.org/package=RSQLite) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3234/badge)](https://bestpractices.coreinfrastructure.org/projects/3234)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
+[![R-CMD-check](https://github.com/bpvgoncalves/RSQLCipher/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bpvgoncalves/RSQLCipher/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/bpvgoncalves/RSQLCipher/branch/main/graph/badge.svg)](https://app.codecov.io/gh/bpvgoncalves/RSQLCipher?branch=main)
 <!-- badges: end -->
 
-Embeds the SQLite database engine in R, providing a DBI-compliant interface. [SQLite](https://www.sqlite.org/index.html) is a public-domain, single-user, very light-weight database engine that implements a decent subset of the SQL 92 standard, including the core table creation, updating, insertion, and selection operations, plus transaction management.
+Embeds the SQLCipher database engine in R and provides an interface
+compliant with the DBI package.
+[SQLCipher](https://www.zetetic.net/sqlcipher/open-source/) is an open
+source library that provides transparent and secure 256-bit AES
+encryption of SQLite database files.
+[SQLite](https://www.sqlite.org/index.html) is a public-domain,
+single-user, very light-weight database engine that implements a decent
+subset of the SQL 92 standard, including the core table creation,
+updating, insertion, and selection operations, plus transaction
+management.
 
-You can install the latest released version from CRAN with:
+This project started as a fork from the amazing
+[RSQLite](https://rsqlite.r-dbi.org) package for which its authors
+deserve full credit. It is intended to keep this package updated with
+new updates to the RSQLite package to keep both as much compatible as
+possible.
 
-<pre class='chroma'>
-<span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"RSQLite"</span><span class='o'>)</span></pre>
+This package allows for the use of regular SQLite database files or
+encrypted ones.
 
-Or install the latest development version from GitHub with:
+<!-- You can install the latest released version from CRAN with: -->
+<!-- ```R -->
+<!-- install.packages("RSQLCipher") -->
+<!-- ``` -->
 
-<pre class='chroma'>
-<span class='c'># install.packages("devtools")</span>
-<span class='nf'>devtools</span><span class='nf'>::</span><span class='nf'><a href='https://devtools.r-lib.org/reference/remote-reexports.html'>install_github</a></span><span class='o'>(</span><span class='s'>"r-dbi/RSQLite"</span><span class='o'>)</span></pre>
+You can install the latest development version from GitHub with:
 
-Discussions associated with DBI and related database packages take place on [R-SIG-DB](https://stat.ethz.ch/mailman/listinfo/r-sig-db). The website [Databases using R](https://db.rstudio.com/) describes the tools and best practices in this ecosystem.
+``` r
+# install.packages("devtools")
+devtools::install_github("bpvgoncalves/RSQLCipher")
+```
 
-## Basic usage
+Discussions associated with DBI and related database packages take place
+on [R-SIG-DB](https://stat.ethz.ch/mailman/listinfo/r-sig-db). The
+website [Databases using R](https://solutions.posit.co/connections/db/)
+describes the tools and best practices in this ecosystem.
 
-<pre class='chroma'>
-<span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://dbi.r-dbi.org'>DBI</a></span><span class='o'>)</span>
-<span class='c'># Create an ephemeral in-memory RSQLite database</span>
-<span class='nv'>con</span> <span class='o'>&lt;-</span> <span class='nf'><a href='https://dbi.r-dbi.org/reference/dbConnect.html'>dbConnect</a></span><span class='o'>(</span><span class='nf'>RSQLite</span><span class='nf'>::</span><span class='nf'><a href='https://rsqlite.r-dbi.org/reference/SQLite.html'>SQLite</a></span><span class='o'>(</span><span class='o'>)</span>, <span class='s'>":memory:"</span><span class='o'>)</span>
+## Usage
 
-<span class='nf'><a href='https://dbi.r-dbi.org/reference/dbListTables.html'>dbListTables</a></span><span class='o'>(</span><span class='nv'>con</span><span class='o'>)</span></pre>
-<pre class='chroma'>
-<span class='c'>## character(0)</span></pre>
-<pre class='chroma'>
-<span class='nf'><a href='https://dbi.r-dbi.org/reference/dbWriteTable.html'>dbWriteTable</a></span><span class='o'>(</span><span class='nv'>con</span>, <span class='s'>"mtcars"</span>, <span class='nv'>mtcars</span><span class='o'>)</span>
-<span class='nf'><a href='https://dbi.r-dbi.org/reference/dbListTables.html'>dbListTables</a></span><span class='o'>(</span><span class='nv'>con</span><span class='o'>)</span></pre>
-<pre class='chroma'>
-<span class='c'>## [1] "mtcars"</span></pre>
-<pre class='chroma'>
-<span class='nf'><a href='https://dbi.r-dbi.org/reference/dbListFields.html'>dbListFields</a></span><span class='o'>(</span><span class='nv'>con</span>, <span class='s'>"mtcars"</span><span class='o'>)</span></pre>
-<pre class='chroma'>
-<span class='c'>##  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear"</span>
-<span class='c'>## [11] "carb"</span></pre>
-<pre class='chroma'>
-<span class='nf'><a href='https://dbi.r-dbi.org/reference/dbReadTable.html'>dbReadTable</a></span><span class='o'>(</span><span class='nv'>con</span>, <span class='s'>"mtcars"</span><span class='o'>)</span></pre>
-<pre class='chroma'>
-<span class='c'>##    mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
-<span class='c'>## 1 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4</span>
-<span class='c'>## 2 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</span>
-<span class='c'>## 3 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1</span>
-<span class='c'>## 4 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1</span>
-<span class='c'>## 5 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2</span>
-<span class='c'>## 6 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1</span>
-<span class='c'>## 7 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4</span>
-<span class='c'>## 8 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2</span>
-<span class='c'>## 9 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2</span>
-<span class='c'>##  [ reached 'max' / getOption("max.print") -- omitted 23 rows ]</span></pre>
-<pre class='chroma'>
-<span class='c'># You can fetch all results:</span>
-<span class='nv'>res</span> <span class='o'>&lt;-</span> <span class='nf'><a href='https://dbi.r-dbi.org/reference/dbSendQuery.html'>dbSendQuery</a></span><span class='o'>(</span><span class='nv'>con</span>, <span class='s'>"SELECT * FROM mtcars WHERE cyl = 4"</span><span class='o'>)</span>
-<span class='nf'><a href='https://dbi.r-dbi.org/reference/dbFetch.html'>dbFetch</a></span><span class='o'>(</span><span class='nv'>res</span><span class='o'>)</span></pre>
-<pre class='chroma'>
-<span class='c'>##    mpg cyl  disp hp drat    wt  qsec vs am gear carb</span>
-<span class='c'>## 1 22.8   4 108.0 93 3.85 2.320 18.61  1  1    4    1</span>
-<span class='c'>## 2 24.4   4 146.7 62 3.69 3.190 20.00  1  0    4    2</span>
-<span class='c'>## 3 22.8   4 140.8 95 3.92 3.150 22.90  1  0    4    2</span>
-<span class='c'>## 4 32.4   4  78.7 66 4.08 2.200 19.47  1  1    4    1</span>
-<span class='c'>## 5 30.4   4  75.7 52 4.93 1.615 18.52  1  1    4    2</span>
-<span class='c'>## 6 33.9   4  71.1 65 4.22 1.835 19.90  1  1    4    1</span>
-<span class='c'>## 7 21.5   4 120.1 97 3.70 2.465 20.01  1  0    3    1</span>
-<span class='c'>## 8 27.3   4  79.0 66 4.08 1.935 18.90  1  1    4    1</span>
-<span class='c'>## 9 26.0   4 120.3 91 4.43 2.140 16.70  0  1    5    2</span>
-<span class='c'>##  [ reached 'max' / getOption("max.print") -- omitted 2 rows ]</span></pre>
-<pre class='chroma'>
-<span class='nf'><a href='https://dbi.r-dbi.org/reference/dbClearResult.html'>dbClearResult</a></span><span class='o'>(</span><span class='nv'>res</span><span class='o'>)</span>
+This package has identical interface to RSQLite.
 
-<span class='c'># Or a chunk at a time</span>
-<span class='nv'>res</span> <span class='o'>&lt;-</span> <span class='nf'><a href='https://dbi.r-dbi.org/reference/dbSendQuery.html'>dbSendQuery</a></span><span class='o'>(</span><span class='nv'>con</span>, <span class='s'>"SELECT * FROM mtcars WHERE cyl = 4"</span><span class='o'>)</span>
-<span class='kr'>while</span> <span class='o'>(</span><span class='o'>!</span><span class='nf'><a href='https://dbi.r-dbi.org/reference/dbHasCompleted.html'>dbHasCompleted</a></span><span class='o'>(</span><span class='nv'>res</span><span class='o'>)</span><span class='o'>)</span> <span class='o'>{</span>
-  <span class='nv'>chunk</span> <span class='o'>&lt;-</span> <span class='nf'><a href='https://dbi.r-dbi.org/reference/dbFetch.html'>dbFetch</a></span><span class='o'>(</span><span class='nv'>res</span>, n <span class='o'>=</span> <span class='m'>5</span><span class='o'>)</span>
-  <span class='nf'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='o'>(</span><span class='nf'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='o'>(</span><span class='nv'>chunk</span><span class='o'>)</span><span class='o'>)</span>
-<span class='o'>}</span></pre>
-<pre class='chroma'>
-<span class='c'>## [1] 5</span>
-<span class='c'>## [1] 5</span>
-<span class='c'>## [1] 1</span></pre>
-<pre class='chroma'>
-<span class='c'># Clear the result</span>
-<span class='nf'><a href='https://dbi.r-dbi.org/reference/dbClearResult.html'>dbClearResult</a></span><span class='o'>(</span><span class='nv'>res</span><span class='o'>)</span>
+``` r
+library(DBI)
 
-<span class='c'># Disconnect from the database</span>
-<span class='nf'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span><span class='o'>(</span><span class='nv'>con</span><span class='o'>)</span></pre>
+# Create an two temporary RSQLCipher databases on disk.
+# A regular database and an encrypted one.
+tmp_plain <- tempfile()
+con_plain <- dbConnect(RSQLCipher::SQLCipher(), 
+                       tmp_plain)
 
-## Acknowledgements
+tmp_enc <- tempfile()
+con_enc <- dbConnect(RSQLCipher::SQLCipher(), 
+                     tmp_enc, 
+                     key = "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF") 
 
-Many thanks to Doug Bates, Seth Falcon, Detlef Groth, Ronggui Huang, Kurt Hornik, Uwe Ligges, Charles Loboz, Duncan Murdoch, and Brian D. Ripley for comments, suggestions, bug reports, and/or patches.
+# Both databases behave the same on regular usage...
+dbWriteTable(con_plain, "mtcars", mtcars)
+dbWriteTable(con_enc, "mtcars", mtcars)
 
-------------------------------------------------------------------------
+stopifnot(identical(dbListTables(con_plain), 
+                    dbListTables(con_enc)))
+stopifnot(identical(dbListFields(con_plain, "mtcars"), 
+                    dbListFields(con_enc, "mtcars")))
+stopifnot(identical(dbReadTable(con_plain, "mtcars"), 
+                    dbReadTable(con_enc, "mtcars")))
 
-Please note that the ‘RSQLite’ project is released with a [Contributor Code of Conduct](https://rsqlite.r-dbi.org/code_of_conduct). By contributing to this project, you agree to abide by its terms.
+dbDisconnect(con_plain)
+dbDisconnect(con_enc)
+
+# ... but the database files on disk are different
+if ("hexView" %in% installed.packages()) {
+  cat(">> Plain database\n")
+  print(hexView::readRaw(tmp_plain, nbytes = 128))
+  cat(">> Encrypted database\n")
+  print(hexView::readRaw(tmp_enc, nbytes = 128))
+} else {
+  cat(">> Plain database\n")
+  print(suppressWarnings(readLines(tmp_plain)[1:10]))
+  cat(">> Encrypted database\n")
+  print(suppressWarnings(readLines(tmp_enc)[1:10]))
+}
+```
+
+    ## >> Plain database
+    ##   0  :  53 51 4c 69 74 65 20 66 6f 72 6d 61 74 20 33 00  |  SQLite format 3.
+    ##  16  :  10 00 01 01 00 40 20 20 00 00 00 01 00 00 00 02  |  .....@  ........
+    ##  32  :  00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 04  |  ................
+    ##  48  :  00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 00  |  ................
+    ##  64  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  |  ................
+    ##  80  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01  |  ................
+    ##  96  :  00 2e 66 ea 0d 00 00 00 01 0f 31 00 0f 31 00 00  |  ..f.......1..1..
+    ## 112  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  |  ................ 
+    ## >> Encrypted database
+    ##   0  :  a5 3c f8 62 a6 ec c2 68 28 a0 72 1b f0 43 e1 26  |  .<.b...h(.r..C.&
+    ##  16  :  f7 ed 79 c5 7e 39 e5 cf c7 80 8f b6 c8 5b 09 ba  |  ..y.~9.......[..
+    ##  32  :  d5 a6 96 6c f6 ec 3f 05 db 2f 4f 5e fb 18 6f 37  |  ...l..?../O^..o7
+    ##  48  :  80 9a 46 f7 a1 c9 a5 86 e2 f8 2a 0b 18 1c 30 e2  |  ..F.......*...0.
+    ##  64  :  cf 6b 25 85 f4 55 7d 1e 72 8c 7b ba 6b d3 fc 23  |  .k%..U}.r.{.k..#
+    ##  80  :  3b 79 05 9e 40 4f 05 d2 20 18 aa 19 75 82 ec fc  |  ;y..@O.. ...u...
+    ##  96  :  e6 85 34 d2 c2 2d ea 9c d7 97 46 5b 9c bb 96 ec  |  ..4..-....F[....
+    ## 112  :  c6 db 80 38 02 12 f3 14 04 29 7d 59 a8 3d d3 aa  |  ...8.....)}Y.=..
+
+``` r
+file.remove(tmp_plain)
+```
+
+    ## [1] TRUE
+
+``` r
+file.remove(tmp_enc)
+```
+
+    ## [1] TRUE

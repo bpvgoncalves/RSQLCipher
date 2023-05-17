@@ -1,5 +1,5 @@
 ---
-output: downlit::readme_document
+output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -9,72 +9,92 @@ pkgload::load_all()
 ```
 
 
-# RSQLite
+# RSQLCipher
 
 <!-- badges: start -->
-[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![rcc](https://github.com/r-dbi/RSQLite/workflows/rcc/badge.svg)](https://github.com/r-dbi/RSQLite/actions)
-[![Coverage Status](https://codecov.io/gh/r-dbi/RSQLite/branch/master/graph/badge.svg)](https://codecov.io/github/r-dbi/RSQLite?branch=master)
-[![CRAN status](https://www.r-pkg.org/badges/version/RSQLite)](https://cran.r-project.org/package=RSQLite)
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3234/badge)](https://bestpractices.coreinfrastructure.org/projects/3234)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+[![R-CMD-check](https://github.com/bpvgoncalves/RSQLCipher/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bpvgoncalves/RSQLCipher/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/bpvgoncalves/RSQLCipher/branch/main/graph/badge.svg)](https://app.codecov.io/gh/bpvgoncalves/RSQLCipher?branch=main)
 <!-- badges: end -->
 
-Embeds the SQLite database engine in R, providing a DBI-compliant interface. [SQLite](https://www.sqlite.org/index.html) is a public-domain, single-user, very light-weight database engine that implements a decent subset of the SQL 92 standard, including the core table creation, updating, insertion, and selection operations, plus transaction management.
+Embeds the SQLCipher database engine in R and provides an interface compliant with the DBI package. 
+[SQLCipher](https://www.zetetic.net/sqlcipher/open-source/) is an open source library that provides 
+transparent and secure 256-bit AES encryption of SQLite database files. [SQLite](https://www.sqlite.org/index.html) 
+is a public-domain, single-user, very light-weight database engine that implements a decent subset 
+of the SQL 92 standard, including the core table creation, updating, insertion, and selection
+operations, plus transaction management.  
 
-You can install the latest released version from CRAN with:
+This project started as a fork from the amazing [RSQLite](https://rsqlite.r-dbi.org) package for 
+which its authors deserve full credit. It is intended to keep this package updated with new updates
+to the RSQLite package to keep both as much compatible as possible.
 
-```R
-install.packages("RSQLite")
-```
+This package allows for the use of regular SQLite database files or encrypted ones.
 
-Or install the latest development version from GitHub with:
+
+<!-- You can install the latest released version from CRAN with: -->
+
+<!-- ```R -->
+<!-- install.packages("RSQLCipher") -->
+<!-- ``` -->
+
+You can install the latest development version from GitHub with:
 
 ```R
 # install.packages("devtools")
-devtools::install_github("r-dbi/RSQLite")
+devtools::install_github("bpvgoncalves/RSQLCipher")
 ```
 
 Discussions associated with DBI and related database packages take place on [R-SIG-DB](https://stat.ethz.ch/mailman/listinfo/r-sig-db).
-The website [Databases using R](https://db.rstudio.com/) describes the tools and best practices in this ecosystem.
+The website [Databases using R](https://solutions.posit.co/connections/db/) describes the tools and 
+best practices in this ecosystem.
 
-## Basic usage
+## Usage
+
+This package has identical interface to RSQLite.
 
 ```{r}
 library(DBI)
-# Create an ephemeral in-memory RSQLite database
-con <- dbConnect(RSQLCipher::SQLCipher(), ":memory:")
 
-dbListTables(con)
-dbWriteTable(con, "mtcars", mtcars)
-dbListTables(con)
+# Create an two temporary RSQLCipher databases on disk.
+# A regular database and an encrypted one.
+tmp_plain <- tempfile()
+con_plain <- dbConnect(RSQLCipher::SQLCipher(), 
+                       tmp_plain)
 
-dbListFields(con, "mtcars")
-dbReadTable(con, "mtcars")
+tmp_enc <- tempfile()
+con_enc <- dbConnect(RSQLCipher::SQLCipher(), 
+                     tmp_enc, 
+                     key = "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF") 
 
-# You can fetch all results:
-res <- dbSendQuery(con, "SELECT * FROM mtcars WHERE cyl = 4")
-dbFetch(res)
-dbClearResult(res)
+# Both databases behave the same on regular usage...
+dbWriteTable(con_plain, "mtcars", mtcars)
+dbWriteTable(con_enc, "mtcars", mtcars)
 
-# Or a chunk at a time
-res <- dbSendQuery(con, "SELECT * FROM mtcars WHERE cyl = 4")
-while (!dbHasCompleted(res)) {
-  chunk <- dbFetch(res, n = 5)
-  print(nrow(chunk))
+stopifnot(identical(dbListTables(con_plain), 
+                    dbListTables(con_enc)))
+stopifnot(identical(dbListFields(con_plain, "mtcars"), 
+                    dbListFields(con_enc, "mtcars")))
+stopifnot(identical(dbReadTable(con_plain, "mtcars"), 
+                    dbReadTable(con_enc, "mtcars")))
+
+dbDisconnect(con_plain)
+dbDisconnect(con_enc)
+
+# ... but the database files on disk are different
+if ("hexView" %in% installed.packages()) {
+  cat(">> Plain database\n")
+  print(hexView::readRaw(tmp_plain, nbytes = 128))
+  cat(">> Encrypted database\n")
+  print(hexView::readRaw(tmp_enc, nbytes = 128))
+} else {
+  cat(">> Plain database\n")
+  print(suppressWarnings(readLines(tmp_plain)[1:10]))
+  cat(">> Encrypted database\n")
+  print(suppressWarnings(readLines(tmp_enc)[1:10]))
 }
-# Clear the result
-dbClearResult(res)
+file.remove(tmp_plain)
+file.remove(tmp_enc)
 
-# Disconnect from the database
-dbDisconnect(con)
 ```
 
-## Acknowledgements
-
-Many thanks to Doug Bates, Seth Falcon, Detlef Groth, Ronggui Huang, Kurt Hornik, Uwe Ligges, Charles Loboz, Duncan Murdoch, and Brian D. Ripley for comments, suggestions, bug reports, and/or patches.
-
----
-
-Please note that the 'RSQLite' project is released with a
-[Contributor Code of Conduct](https://rsqlite.r-dbi.org/code_of_conduct).
-By contributing to this project, you agree to abide by its terms.
