@@ -1,4 +1,12 @@
-# RSQLite (development version)
+# RSQLCipher 0.1.0
+
+## Features
+
+- Update bundled back-end from SQLite to SQLCipher.
+- Implement dbChangeKey to allow database password modification.
+
+
+---------------
 
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
