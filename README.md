@@ -7,7 +7,7 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-
+[![R-CMD-check](https://github.com/bpvgoncalves/RSQLCipher/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bpvgoncalves/RSQLCipher/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 Embeds the SQLCipher database engine in R and provides an interface
@@ -103,14 +103,14 @@ if ("hexView" %in% installed.packages()) {
     ##  96  :  00 2e 66 ea 0d 00 00 00 01 0f 31 00 0f 31 00 00  |  ..f.......1..1..
     ## 112  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  |  ................ 
     ## >> Encrypted database
-    ##   0  :  31 49 1a 02 42 4c fc 11 63 77 c8 e5 4f 5d 2b 2b  |  1I..BL..cw..O]++
-    ##  16  :  b4 bc c6 aa 3d f5 2d 88 ac 8f 88 35 0d a5 08 03  |  ....=.-....5....
-    ##  32  :  66 df 1f a4 60 8a 69 1d 41 11 b4 23 d0 6d 63 9d  |  f...`.i.A..#.mc.
-    ##  48  :  24 48 9b 80 56 f0 e1 ef f9 39 3d 59 9d 8d 9b f0  |  $H..V....9=Y....
-    ##  64  :  3b 1b ed be 46 f1 3b 28 c9 e3 d1 a1 e9 69 4d 49  |  ;...F.;(.....iMI
-    ##  80  :  8d 16 d8 58 6e db 8f 1a 7b be d0 0e 1b da 7d 08  |  ...Xn...{.....}.
-    ##  96  :  fb 81 20 0a ef 85 7e 0d db c2 e6 9b 2a eb 86 a9  |  .. ...~.....*...
-    ## 112  :  0e aa a0 26 00 ae 07 e9 16 4c be d1 3e 71 9a a4  |  ...&.....L..>q..
+    ##   0  :  24 47 ce 76 b3 e0 95 9c 9c 4d eb 10 b9 ab d1 10  |  $G.v.....M......
+    ##  16  :  12 f1 aa 08 e1 05 cb 87 16 eb e7 4e 8c 9d d2 de  |  ...........N....
+    ##  32  :  f1 dc 64 61 25 dc 1f 7e f9 ac fc f4 28 5d fa 6f  |  ..da%..~....(].o
+    ##  48  :  c6 9a 5f f2 2a cb 19 b1 b5 6c 63 a5 b4 86 de 61  |  .._.*....lc....a
+    ##  64  :  6a 74 98 56 5c 0d 69 96 b9 f3 d7 5d a2 1a 20 58  |  jt.V\.i....].. X
+    ##  80  :  0d e0 49 dc c7 fe db 21 8b d7 2f b1 9a 40 b6 37  |  ..I....!../..@.7
+    ##  96  :  86 e0 68 23 f4 c4 e9 8d de 40 c0 43 97 6a ad cb  |  ..h#.....@.C.j..
+    ## 112  :  a8 e6 f9 18 a7 09 94 0a e4 49 56 f2 1f 9b f1 56  |  .........IV....V
 
 ``` r
 file.remove(tmp_plain)
