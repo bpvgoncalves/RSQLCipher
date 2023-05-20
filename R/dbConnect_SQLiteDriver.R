@@ -138,10 +138,10 @@ dbConnect_SQLiteDriver <- function(drv, dbname = "", ..., loadable.extensions = 
           }
         )
       } else {
-        message("Cannot use database encryption. The 'key' provided has invalid length.")
+        warning("Cannot use database encryption. The 'key' provided has invalid length.")
       }
     } else {
-      message("Cannot use database encryption. The 'key' provided has invalid type.")
+      warning("Cannot use database encryption. The 'key' provided has invalid type.")
     }
   }
 

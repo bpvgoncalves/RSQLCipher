@@ -1,11 +1,16 @@
 # RSQLCipher (development version)
 
-### Internal
+## Enhancements
+- Change messages about invalid keys to warnings.
+
+## Internal
 - Fix compilation errors for macos and windows os'es.
+- Add extra tests to the suite.
+
 
 # RSQLCipher 0.1.0
 
-### Features
+## Features
 - Update bundled back-end from SQLite to SQLCipher.
 - Implement dbChangeKey to allow database password modification.
 
