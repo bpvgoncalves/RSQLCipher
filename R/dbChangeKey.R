@@ -18,11 +18,11 @@ dbChangeKey <- function(conn, old_key = NULL, new_key = NULL) {
     if (nchar(new_key) == 64) {
       dbExecute(conn, sprintf("PRAGMA rekey = \"x'%s'\";", new_key))
     } else {
-      message("Cannot change database key. The 'new_key' provided has invalid length.")
+      warning("Cannot change database key. The 'new_key' provided has invalid length.")
       invisible(FALSE)
     }
   } else {
-    message("Cannot change database key. The 'new_key' provided has invalid type.")
+    warning("Cannot change database key. The 'new_key' provided has invalid type.")
     invisible(FALSE)
   }
 
