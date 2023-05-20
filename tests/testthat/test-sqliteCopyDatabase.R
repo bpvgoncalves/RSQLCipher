@@ -12,6 +12,7 @@ test_that("fails with bad arguments", {
   for (i in seq_along(badnames)) {
     expect_error(sqliteCopyDatabase(con, badnames[[i]]), names(badnames)[[i]])
   }
+  expect_error(sqliteCopyDatabase("not_con", con), "'from' must be a SQLiteConnection object")
 })
 
 # Specific to RSQLite
