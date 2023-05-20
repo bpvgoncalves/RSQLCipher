@@ -27,12 +27,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup OpenSSL (macos)
-        if: matrix.config.os == 'macos-latest'
-        run: |
-          brew unlink openssl
-          brew link --force openssl@1.1
-
       - uses: r-lib/actions/setup-pandoc@v2
 
       - uses: r-lib/actions/setup-r@v2
