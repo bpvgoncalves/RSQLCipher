@@ -1,4 +1,4 @@
-# RSQLCipher (development version)
+# RSQLCipher 0.1.1
 
 ## Enhancements
 - Change messages about invalid keys to warnings.
@@ -6,6 +6,7 @@
 ## Internal
 - Fix compilation errors for macos and windows os'es.
 - Add extra tests to the suite.
+- Better key validation.
 
 
 # RSQLCipher 0.1.0
