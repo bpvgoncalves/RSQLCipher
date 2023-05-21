@@ -246,5 +246,11 @@ test_that("it is posible to set a valid database key", {
   con <-  dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = key_1)
 
   dbDisconnect(con)
+})
 
+test_that("it is posible to set a valid cache size", {
+
+  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", cache_size = "a"), "NAs introduced")
+  con <-  dbConnect(RSQLCipher::SQLCipher(), ":memory:", cache_size = 1000)
+  dbDisconnect(con)
 })
