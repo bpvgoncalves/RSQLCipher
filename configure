@@ -1,0 +1,22 @@
+#!/bin/sh
+# Based on Anticonf (tm) script by Jeroen Ooms (2023)
+
+# Library 'vanilla' settings
+PKG_CFLAGS=""
+PKG_LIBS="-lcrypto"
+
+if [ `uname` = "Darwin" ]; then
+BREWDIR=`brew --prefix`
+PKG_CFLAGS="-I$BREWDIR/opt/openssl/include -I$BREWDIR/opt/openssl@1.1/include"
+PKG_LIBS="-L$BREWDIR/opt/openssl/lib -L$BREWDIR/opt/openssl@1.1/lib $PKG_LIBS"
+
+fi
+
+echo "Using PKG_CFLAGS=$PKG_CFLAGS"
+echo "Using PKG_LIBS=$PKG_LIBS"
+
+# Write to Makevars
+sed -e "s|@cflags@|$PKG_CFLAGS|" -e "s|@libs@|$PKG_LIBS|" src/Makevars.in > src/Makevars
+
+# Success
+exit 0

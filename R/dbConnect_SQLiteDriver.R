@@ -126,7 +126,8 @@ dbConnect_SQLiteDriver <- function(drv, dbname = "", ..., loadable.extensions = 
 
   ## experimental PRAGMAs
   if (!is.null(key)) {
-    if (is.character(key)) {
+    if (is.hex(key)) {
+      key <- gsub(" ", "", key, fixed = TRUE) # eliminate potential spaces to eval len
       if (nchar(key) == 64) {
         tryCatch(
           dbExecute(conn, sprintf("PRAGMA key = \"x'%s'\";", key)),
@@ -138,10 +139,10 @@ dbConnect_SQLiteDriver <- function(drv, dbname = "", ..., loadable.extensions = 
           }
         )
       } else {
-        message("Cannot use database encryption. The 'key' provided has invalid length.")
+        warning("Cannot use database encryption. The 'key' provided has invalid length.")
       }
     } else {
-      message("Cannot use database encryption. The 'key' provided has invalid type.")
+      warning("Cannot use database encryption. The 'key' provided has invalid type.")
     }
   }
 

@@ -10,7 +10,10 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 [![R-CMD-check](https://github.com/bpvgoncalves/RSQLCipher/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bpvgoncalves/RSQLCipher/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/bpvgoncalves/RSQLCipher/branch/main/graph/badge.svg)](https://app.codecov.io/gh/bpvgoncalves/RSQLCipher?branch=main)
+coverage](https://codecov.io/gh/bpvgoncalves/RSQLCipher/branch/main/graph/badge.svg)](https://app.codecov.io/gh/bpvgoncalves/RSQLCipher?branch=develop)
+![GitHub R package version
+(branch)](https://img.shields.io/github/r-package/v/bpvgoncalves/RSQLCipher/main?color=black&label=Github)
+![GitHub](https://img.shields.io/github/license/bpvgoncalves/RSQLCipher?color=black&label=License)
 <!-- badges: end -->
 
 Embeds the SQLCipher database engine in R and provides an interface
@@ -106,14 +109,14 @@ if ("hexView" %in% installed.packages()) {
     ##  96  :  00 2e 66 ea 0d 00 00 00 01 0f 31 00 0f 31 00 00  |  ..f.......1..1..
     ## 112  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  |  ................ 
     ## >> Encrypted database
-    ##   0  :  a5 3c f8 62 a6 ec c2 68 28 a0 72 1b f0 43 e1 26  |  .<.b...h(.r..C.&
-    ##  16  :  f7 ed 79 c5 7e 39 e5 cf c7 80 8f b6 c8 5b 09 ba  |  ..y.~9.......[..
-    ##  32  :  d5 a6 96 6c f6 ec 3f 05 db 2f 4f 5e fb 18 6f 37  |  ...l..?../O^..o7
-    ##  48  :  80 9a 46 f7 a1 c9 a5 86 e2 f8 2a 0b 18 1c 30 e2  |  ..F.......*...0.
-    ##  64  :  cf 6b 25 85 f4 55 7d 1e 72 8c 7b ba 6b d3 fc 23  |  .k%..U}.r.{.k..#
-    ##  80  :  3b 79 05 9e 40 4f 05 d2 20 18 aa 19 75 82 ec fc  |  ;y..@O.. ...u...
-    ##  96  :  e6 85 34 d2 c2 2d ea 9c d7 97 46 5b 9c bb 96 ec  |  ..4..-....F[....
-    ## 112  :  c6 db 80 38 02 12 f3 14 04 29 7d 59 a8 3d d3 aa  |  ...8.....)}Y.=..
+    ##   0  :  7a 8a fa fc 3b 0d b8 5e dd 4a 0e 61 cb 59 5e e9  |  z...;..^.J.a.Y^.
+    ##  16  :  95 f1 87 24 77 82 bb d8 66 0a 3b 16 be 1a 26 c2  |  ...$w...f.;...&.
+    ##  32  :  34 b3 dd 75 b7 f4 fc eb 36 6f c8 58 97 8d ab a5  |  4..u....6o.X....
+    ##  48  :  40 a5 25 04 79 a5 9f 83 91 72 13 22 ae 10 bf 1b  |  @.%.y....r."....
+    ##  64  :  00 5e 0b 45 14 e0 7b b7 1b f7 2b f2 e9 dd 33 f7  |  .^.E..{...+...3.
+    ##  80  :  72 0a c0 4e d7 d4 c1 f8 2b 03 b9 30 b3 6e 3f 64  |  r..N....+..0.n?d
+    ##  96  :  b0 b9 c0 35 46 d6 65 05 04 03 9b 46 7c 82 db 79  |  ...5F.e....F|..y
+    ## 112  :  e4 e3 18 cb e2 d3 7a 0b 13 1b 6a ce d3 0d 22 68  |  ......z...j..."h
 
 ``` r
 file.remove(tmp_plain)

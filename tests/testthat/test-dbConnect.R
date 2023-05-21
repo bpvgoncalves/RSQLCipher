@@ -24,6 +24,10 @@ test_that("invalid dbnames throw errors", {
   expect_error(dbConnect(SQLCipher(), dbname = as.character(NA)))
 })
 
+test_that("arguments not accepted by the driver", {
+  expect_warning(dbConnect(SQLCipher("arg_not_expected"), ":memory:"))
+})
+
 # Specific to RSQLite
 test_that("can get and set vfs values", {
   allowed <- switch(os(),
@@ -229,4 +233,27 @@ test_that("busy_handler timeout", {
   expect_match(conditionMessage(err), "database is locked")
   expect_true(time >= as.difftime(0.2, units = "secs"))
   expect_true(time <  as.difftime(1.0, units = "secs"))
+})
+
+
+test_that("it is posible to set a valid database key", {
+
+  key_1 <- "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"
+  key_bad <- "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEG"
+  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = 123456), "invalid type")
+  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = 12345L), "invalid type")
+  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = NA), "invalid type")
+  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = key_bad), "invalid type")
+  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = "INVALID"), "invalid type")
+  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = "123ABC"), "invalid length")
+  con <-  dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = key_1)
+
+  dbDisconnect(con)
+})
+
+test_that("it is posible to set a valid cache size", {
+
+  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", cache_size = "a"), "NAs introduced")
+  con <-  dbConnect(RSQLCipher::SQLCipher(), ":memory:", cache_size = 1000)
+  dbDisconnect(con)
 })
