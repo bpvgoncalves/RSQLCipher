@@ -1,5 +1,8 @@
 # RSQLCipher (development version)
 
+## Features
+- Added function `sqliteIsTransacting()` to check if there are any open transactions
+
 # RSQLCipher 0.1.1
 
 ## Enhancements
