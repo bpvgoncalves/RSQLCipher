@@ -34,6 +34,8 @@ test_that("commit unnamed transactions", {
   expect_equal(dbListTables(con2), character())
   dbCommit(con)
   expect_false(sqliteIsTransacting(con))
+  expect_error(dbCommit(con))
+  expect_error(dbRollback(con))
   expect_equal(dbListTables(con), "a")
   expect_equal(dbListTables(con2), "a")
 
@@ -62,6 +64,8 @@ test_that("rollback unnamed transactions", {
   expect_equal(dbListTables(con2), character())
   dbRollback(con)
   expect_false(sqliteIsTransacting(con))
+  expect_error(dbCommit(con))
+  expect_error(dbRollback(con))
   expect_equal(dbListTables(con), character())
   expect_equal(dbListTables(con2), character())
 
