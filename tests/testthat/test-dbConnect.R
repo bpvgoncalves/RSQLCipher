@@ -239,10 +239,13 @@ test_that("busy_handler timeout", {
 test_that("it is posible to set a valid database key", {
 
   key_1 <- "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"
+  key_bad <- "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEG"
   expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = 123456), "invalid type")
   expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = 12345L), "invalid type")
   expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = NA), "invalid type")
-  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = "1234"), "invalid length")
+  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = key_bad), "invalid type")
+  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = "INVALID"), "invalid type")
+  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = "123ABC"), "invalid length")
   con <-  dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = key_1)
 
   dbDisconnect(con)
