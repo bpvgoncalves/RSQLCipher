@@ -1,3 +1,7 @@
+## usethis namespace: start
+#' @importFrom lifecycle deprecated
+#' @importFrom lifecycle deprecate_soft
+## usethis namespace: end
 #' @include SQLiteConnection.R
 #' @include SQLiteDriver.R
 NULL

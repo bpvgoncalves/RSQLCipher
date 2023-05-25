@@ -1,6 +1,6 @@
 Package: RSQLCipher
 Title: SQLCipher Interface for R
-Version: 0.1.1.9001
+Version: 0.1.1.9002
 Authors@R: c(
     person("Bruno", "Gonçalves", , "bpvgoncalves@users.noreply.github.com", role = "aut",
            comment = c(ORCID = "0000-0002-0797-7717")),
@@ -44,6 +44,7 @@ Imports:
     bit64,
     blob (>= 1.2.0),
     DBI (>= 1.1.0),
+    lifecycle,
     memoise,
     methods,
     pkgconfig
@@ -82,12 +83,12 @@ Collate:
     'compatRowNames.R'
     'copy.R'
     'cpp11.R'
+    'databaseKeyChange.R'
     'datasetsDb.R'
     'dbAppendTable_SQLiteConnection.R'
     'dbBeginTransaction.R'
     'dbBegin_SQLiteConnection.R'
     'dbBind_SQLiteResult.R'
-    'dbChangeKey.R'
     'dbClearResult_SQLiteResult.R'
     'dbColumnInfo_SQLiteResult.R'
     'dbCommit_SQLiteConnection.R'
