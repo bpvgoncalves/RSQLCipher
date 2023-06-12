@@ -23,3 +23,23 @@ test_that("can extract column info", {
     )
   )
 })
+
+test_that("results without any declared type return 'NA'", {
+  db <- memory_db()
+  on.exit(dbDisconnect(db))
+
+  res <- dbSendQuery(db, "SELECT 1 as one")
+  info <- dbColumnInfo(res)
+  dbClearResult(res)
+
+  expect_equal(
+    info,
+    data.frame(
+      name = "one",
+      type = "integer",
+      .declared_type = "NA",
+      stringsAsFactors = FALSE,
+      row.names = NULL
+    )
+  )
+})
