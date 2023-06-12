@@ -83,6 +83,7 @@ Collate:
     'compatRowNames.R'
     'copy.R'
     'cpp11.R'
+    'databaseKeyAdd.R'
     'databaseKeyChange.R'
     'datasetsDb.R'
     'dbAppendTable_SQLiteConnection.R'
