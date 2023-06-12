@@ -17,6 +17,7 @@ test_that("can extract column info", {
     data.frame(
       name = names(df),
       type = vapply(df, typeof, character(1)),
+      .declared_type = c("INTEGER", "REAL", "TEXT", "BLOB"),
       stringsAsFactors = FALSE,
       row.names = NULL
     )
