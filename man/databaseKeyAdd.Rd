@@ -4,19 +4,19 @@
 \alias{databaseKeyAdd}
 \title{databaseKeyAdd}
 \arguments{
-\item{conn}{Connection to existing database}
+\item{conn}{Connection to an existing (plain) database to be encrypted.}
 
 \item{key}{New key to encrypt the database, a character string of size 64, containing 32
 hex-encoded characters to be used as new key for the database.}
 
-\item{file}{Optional, path to the new encrypted database. a temporary file will be generated if
+\item{file}{Optional, path to the new encrypted database. A temporary file will be generated if
 not provided.}
 }
 \value{
 A named list with True/False and the file name of the encrypted database
 }
 \description{
-Creates a copy of an existing database and encrypts it using the key.
+Creates an encrypted copy of an existing database, using the provided key.
 \emph{THIS FUNCTION MAY TAKE LONG FOR BIG DATABASE FILES}
 }
 \examples{
@@ -27,8 +27,10 @@ Creates a copy of an existing database and encrypts it using the key.
 
   newDB <- databaseKeyAdd(con, key)
   print(newDB)
+  dbDisconnect(con)
 
-  con2 <- dbConnect(RSQLCipher::SQLCipher(), newDB$file) #, key = key)
+  con2 <- dbConnect(RSQLCipher::SQLCipher(), newDB$file, key = key)
   dbListTables(con2)
+  dbDisconnect(con2)
 
 }

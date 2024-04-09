@@ -18,9 +18,11 @@
 #'
 #'   newDB <- databaseKeyRemove(con)
 #'   print(newDB)
+#'   dbDisconnect(con)
 #'
 #'   con2 <- dbConnect(RSQLCipher::SQLCipher(), newDB$file)
 #'   dbListTables(con2)
+#'   dbDisconnect(con2)
 #'
 databaseKeyRemove<- function(conn, file = tempfile()) {
 

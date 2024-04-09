@@ -1,12 +1,12 @@
 #' databaseKeyAdd
 #'
-#' Creates a copy of an existing database and encrypts it using the key.
+#' Creates an encrypted copy of an existing database, using the provided key.
 #' *THIS FUNCTION MAY TAKE LONG FOR BIG DATABASE FILES*
 #'
-#' @param conn  Connection to existing database
+#' @param conn  Connection to an existing (plain) database to be encrypted.
 #' @param key   New key to encrypt the database, a character string of size 64, containing 32
 #' hex-encoded characters to be used as new key for the database.
-#' @param file  Optional, path to the new encrypted database. a temporary file will be generated if
+#' @param file  Optional, path to the new encrypted database. A temporary file will be generated if
 #' not provided.
 #'
 #' @usage NULL
@@ -20,9 +20,11 @@
 #'
 #'   newDB <- databaseKeyAdd(con, key)
 #'   print(newDB)
+#'   dbDisconnect(con)
 #'
-#'   con2 <- dbConnect(RSQLCipher::SQLCipher(), newDB$file) #, key = key)
+#'   con2 <- dbConnect(RSQLCipher::SQLCipher(), newDB$file, key = key)
 #'   dbListTables(con2)
+#'   dbDisconnect(con2)
 #'
 databaseKeyAdd <- function(conn, key, file = tempfile()) {
 
