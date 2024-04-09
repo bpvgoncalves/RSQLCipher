@@ -2,6 +2,8 @@
 
 ## Features
 - Added function `sqliteIsTransacting()` to check if there are any open transactions.
+- Added functions `databaseKeyAdd()` and `databaseKeyRemove()` to manage encryption and decryption
+of existing databases.
 
 ## Other
 - Function `databaseKeyChange()` replaces `dbChangeKey()`.
