@@ -37,17 +37,26 @@ databaseKeyAdd <- function(conn, key, file = tempfile()) {
     return(invisible(list(result = FALSE, file = file)))
   }
 
-  # tryCatch(
-  #   dbExecute(conn, sprintf("PRAGMA key = \"x'%s'\";", key)),
-  #   error = function(e) {
-  #     warning("Couldn't set key for database: ", conditionMessage(e), "\n",
-  #             "Use `key` = NULL to turn off this warning.",
-  #             call. = FALSE
-  #     )
-  #   }
-  # )
+  tryCatch({
 
-  new_conn <- dbConnect(SQLCipher(), file) #, key = key)
-  connection_copy_database(conn@ptr, new_conn@ptr)
-  return(invisible(list(result = TRUE, file = file)))
+    key <- paste0("x'", key, "'")
+    dbExecute(conn,
+              "ATTACH DATABASE :f AS encrypted KEY :k;",
+              params = list(f = file, k = key))
+
+    dbExecute(conn,
+              "SELECT sqlcipher_export('encrypted');")
+
+    dbExecute(conn,
+              "DETACH DATABASE encrypted;")
+
+    return(invisible(list(result = TRUE, file = file)))
+
+    },
+    condition = function(e) {
+      warning("Couldn't set key for database: ", conditionMessage(e), "\n",
+              "Use `key` = NULL to turn off this warning.",
+              call. = FALSE)
+      return(invisible(list(result = FALSE, file = file)))
+  })
 }
