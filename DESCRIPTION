@@ -43,15 +43,16 @@ Depends:
 Imports: 
     bit64,
     blob (>= 1.2.0),
-    DBI (>= 1.1.0),
+    DBI (>= 1.2.0),
     lifecycle,
     memoise,
     methods,
-    pkgconfig
+    pkgconfig,
+    rlang
 Suggests: 
     callr,
     covr,
-    DBItest (>= 1.7.2.9001),
+    DBItest (>= 1.8.0),
     gert,
     gh,
     hms,
@@ -67,6 +68,9 @@ LinkingTo:
     plogr (>= 0.2.0)
 VignetteBuilder: 
     knitr
+Remotes: 
+    r-dbi/DBI,
+    r-dbi/DBItest
 Config/autostyle/scope: line_breaks
 Config/autostyle/strict: false
 Config/testthat/edition: 3
@@ -99,6 +103,7 @@ Collate:
     'dbDataType_SQLiteConnection.R'
     'dbDataType_SQLiteDriver.R'
     'dbDisconnect_SQLiteConnection.R'
+    'dbExistsTable_SQLiteConnection_Id.R'
     'dbExistsTable_SQLiteConnection_character.R'
     'dbFetch_SQLiteResult.R'
     'dbGetException_SQLiteConnection.R'
@@ -131,11 +136,12 @@ Collate:
     'deprecated.R'
     'export.R'
     'fetch_SQLiteResult.R'
+    'import-standalone-check_suggested.R'
+    'import-standalone-purrr.R'
     'initExtension.R'
     'initRegExp.R'
     'isSQLKeyword_SQLiteConnection_character.R'
     'make.db.names_SQLiteConnection_character.R'
-    'names.R'
     'pkgconfig.R'
     'show_SQLiteConnection.R'
     'sqlData_SQLiteConnection.R'
