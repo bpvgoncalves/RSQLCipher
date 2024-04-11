@@ -1,6 +1,6 @@
 Package: RSQLCipher
 Title: SQLCipher Interface for R
-Version: 0.1.1
+Version: 0.2.0
 Authors@R: c(
     person("Bruno", "Gonçalves", , "bpvgoncalves@users.noreply.github.com", role = "aut",
            comment = c(ORCID = "0000-0002-0797-7717")),
@@ -43,14 +43,16 @@ Depends:
 Imports: 
     bit64,
     blob (>= 1.2.0),
-    DBI (>= 1.1.0),
+    DBI (>= 1.2.0),
+    lifecycle,
     memoise,
     methods,
-    pkgconfig
+    pkgconfig,
+    rlang
 Suggests: 
     callr,
     covr,
-    DBItest (>= 1.7.2.9001),
+    DBItest (>= 1.8.0),
     gert,
     gh,
     hms,
@@ -66,12 +68,15 @@ LinkingTo:
     plogr (>= 0.2.0)
 VignetteBuilder: 
     knitr
+Remotes: 
+    r-dbi/DBI,
+    r-dbi/DBItest
 Config/autostyle/scope: line_breaks
 Config/autostyle/strict: false
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Collate: 
     'SQLiteConnection.R'
     'SQLKeywords_SQLiteConnection.R'
@@ -82,12 +87,14 @@ Collate:
     'compatRowNames.R'
     'copy.R'
     'cpp11.R'
+    'databaseKeyAdd.R'
+    'databaseKeyChange.R'
+    'databaseKeyRemove.R'
     'datasetsDb.R'
     'dbAppendTable_SQLiteConnection.R'
     'dbBeginTransaction.R'
     'dbBegin_SQLiteConnection.R'
     'dbBind_SQLiteResult.R'
-    'dbChangeKey.R'
     'dbClearResult_SQLiteResult.R'
     'dbColumnInfo_SQLiteResult.R'
     'dbCommit_SQLiteConnection.R'
@@ -96,6 +103,7 @@ Collate:
     'dbDataType_SQLiteConnection.R'
     'dbDataType_SQLiteDriver.R'
     'dbDisconnect_SQLiteConnection.R'
+    'dbExistsTable_SQLiteConnection_Id.R'
     'dbExistsTable_SQLiteConnection_character.R'
     'dbFetch_SQLiteResult.R'
     'dbGetException_SQLiteConnection.R'
@@ -128,11 +136,12 @@ Collate:
     'deprecated.R'
     'export.R'
     'fetch_SQLiteResult.R'
+    'import-standalone-check_suggested.R'
+    'import-standalone-purrr.R'
     'initExtension.R'
     'initRegExp.R'
     'isSQLKeyword_SQLiteConnection_character.R'
     'make.db.names_SQLiteConnection_character.R'
-    'names.R'
     'pkgconfig.R'
     'show_SQLiteConnection.R'
     'sqlData_SQLiteConnection.R'

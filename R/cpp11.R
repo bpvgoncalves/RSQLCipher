@@ -12,6 +12,10 @@ connection_release <- function(con_) {
   invisible(.Call(`_RSQLCipher_connection_release`, con_))
 }
 
+connection_in_transaction <- function(con_) {
+  .Call(`_RSQLCipher_connection_in_transaction`, con_)
+}
+
 connection_copy_database <- function(from, to) {
   invisible(.Call(`_RSQLCipher_connection_copy_database`, from, to))
 }

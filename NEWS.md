@@ -1,3 +1,14 @@
+# RSQLCipher 0.2.0
+
+## Features
+- Added function `sqliteIsTransacting()` to check if there are any open transactions.
+- Added functions `databaseKeyAdd()` and `databaseKeyRemove()` to manage encryption and decryption
+of existing databases.
+
+## Other
+- Function `databaseKeyChange()` replaces `dbChangeKey()`.
+- Sync code with [RSQLite's](https://github.com/r-dbi/RSQLite) main branch.
+
 # RSQLCipher 0.1.1
 
 ## Enhancements
@@ -13,7 +24,7 @@
 
 ## Features
 - Update bundled back-end from SQLite to SQLCipher.
-- Implement dbChangeKey to allow database password modification.
+- Implement `dbChangeKey()` to allow database password modification.
 
 
 ---------------
