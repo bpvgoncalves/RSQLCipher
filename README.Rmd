@@ -33,6 +33,19 @@ to the RSQLite package to keep both as much compatible as possible.
 
 This package allows for the use of regular SQLite database files or encrypted ones.
 
+Currently, only the following differences exist between both drivers:
+
+- `dbConnect()` with `RSQLCipher()` driver accepts the parameter `key` when creating a new
+encrypted database or opening a connection to a existing one.
+
+- There are 3 RSQLCipher specific functions:
+
+  - `databaseKeyAdd()`, to create an encrypted copy of an existing plain database.
+  
+  - `databaseKeyChange()`, to modify the key on an encrypted database.
+  
+  - `databaseKeyRemove()`, to create a decrypted copy of an encrypted database.
+
 
 <!-- You can install the latest released version from CRAN with: -->
 

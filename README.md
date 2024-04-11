@@ -36,6 +36,22 @@ possible.
 This package allows for the use of regular SQLite database files or
 encrypted ones.
 
+Currently, only the following differences exist between both drivers:
+
+- `dbConnect()` with `RSQLCipher()` driver accepts the parameter `key`
+  when creating a new encrypted database or opening a connection to a
+  existing one.
+
+- There are 3 RSQLCipher specific functions:
+
+  - `databaseKeyAdd()`, to create an encrypted copy of an existing plain
+    database.
+
+  - `databaseKeyChange()`, to modify the key on an encrypted database.
+
+  - `databaseKeyRemove()`, to create a decrypted copy of an encrypted
+    database.
+
 <!-- You can install the latest released version from CRAN with: -->
 <!-- ```R -->
 <!-- install.packages("RSQLCipher") -->
@@ -106,17 +122,17 @@ if ("hexView" %in% installed.packages()) {
     ##  48  :  00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 00  |  ................
     ##  64  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  |  ................
     ##  80  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01  |  ................
-    ##  96  :  00 2e 66 ea 0d 00 00 00 01 0f 31 00 0f 31 00 00  |  ..f.......1..1..
+    ##  96  :  00 2e 72 a2 0d 00 00 00 01 0f 31 00 0f 31 00 00  |  ..r.......1..1..
     ## 112  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  |  ................ 
     ## >> Encrypted database
-    ##   0  :  7a 8a fa fc 3b 0d b8 5e dd 4a 0e 61 cb 59 5e e9  |  z...;..^.J.a.Y^.
-    ##  16  :  95 f1 87 24 77 82 bb d8 66 0a 3b 16 be 1a 26 c2  |  ...$w...f.;...&.
-    ##  32  :  34 b3 dd 75 b7 f4 fc eb 36 6f c8 58 97 8d ab a5  |  4..u....6o.X....
-    ##  48  :  40 a5 25 04 79 a5 9f 83 91 72 13 22 ae 10 bf 1b  |  @.%.y....r."....
-    ##  64  :  00 5e 0b 45 14 e0 7b b7 1b f7 2b f2 e9 dd 33 f7  |  .^.E..{...+...3.
-    ##  80  :  72 0a c0 4e d7 d4 c1 f8 2b 03 b9 30 b3 6e 3f 64  |  r..N....+..0.n?d
-    ##  96  :  b0 b9 c0 35 46 d6 65 05 04 03 9b 46 7c 82 db 79  |  ...5F.e....F|..y
-    ## 112  :  e4 e3 18 cb e2 d3 7a 0b 13 1b 6a ce d3 0d 22 68  |  ......z...j..."h
+    ##   0  :  f5 0c ab 3d 1f ef dd 74 e9 8d 8c 9b 0d e6 5c 2c  |  ...=...t......\,
+    ##  16  :  0a 2b 10 57 8a 5c af 57 43 a2 cb b9 af bb ef 8c  |  .+.W.\.WC.......
+    ##  32  :  3c 8b ae 72 d7 75 e6 4c ff 1e ba d8 41 f5 e1 4b  |  <..r.u.L....A..K
+    ##  48  :  f3 68 f3 db 81 3c 7b 49 49 8d e4 d4 22 a4 21 c4  |  .h...<{II...".!.
+    ##  64  :  a1 f3 4e ff 89 31 56 a7 90 de 49 da 20 8e 6b 22  |  ..N..1V...I. .k"
+    ##  80  :  a2 e6 51 b3 f8 9a d5 b5 de 03 13 51 05 93 c2 2d  |  ..Q........Q...-
+    ##  96  :  9a 6c ed 60 82 bc e2 4e 5e f1 e6 82 f3 2d ba 1e  |  .l.`...N^....-..
+    ## 112  :  53 c4 f9 ac da 5e 72 fe e6 6e dd 97 59 42 0d 13  |  S....^r..n..YB..
 
 ``` r
 file.remove(tmp_plain)
