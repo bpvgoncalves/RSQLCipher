@@ -16,10 +16,10 @@ coverage](https://codecov.io/gh/bpvgoncalves/RSQLCipher/branch/main/graph/badge.
 ![GitHub](https://img.shields.io/github/license/bpvgoncalves/RSQLCipher?color=black&label=License)
 <!-- badges: end -->
 
-Embeds the SQLCipher database engine in R and provides an interface
-compliant with the DBI package.
-[SQLCipher](https://www.zetetic.net/sqlcipher/open-source/) is an open
-source library that provides transparent and secure 256-bit AES
+RSQLCipher embeds the SQLCipher database engine in R and provides an
+interface compliant with the DBI package.
+[SQLCipher](https://www.zetetic.net/sqlcipher/open-source/) is an
+open-source library that provides transparent and secure 256-bit AES
 encryption of SQLite database files.
 [SQLite](https://www.sqlite.org/index.html) is a public-domain,
 single-user, very light-weight database engine that implements a decent
@@ -27,10 +27,10 @@ subset of the SQL 92 standard, including the core table creation,
 updating, insertion, and selection operations, plus transaction
 management.
 
-This project started as a fork from the amazing
-[RSQLite](https://rsqlite.r-dbi.org) package for which its authors
+This project started as a fork of the amazing
+[RSQLite](https://rsqlite.r-dbi.org) package, for which its authors
 deserve full credit. It is intended to keep this package updated with
-new updates to the RSQLite package to keep both as much compatible as
+new updates to the RSQLite package to keep both as compatible as
 possible.
 
 This package allows for the use of regular SQLite database files or
@@ -39,7 +39,7 @@ encrypted ones.
 Currently, only the following differences exist between both drivers:
 
 - `dbConnect()` with `RSQLCipher()` driver accepts the parameter `key`
-  when creating a new encrypted database or opening a connection to a
+  when creating a new encrypted database or opening a connection to an
   existing one.
 
 - There are 3 RSQLCipher specific functions:
@@ -125,14 +125,14 @@ if ("hexView" %in% installed.packages()) {
     ##  96  :  00 2e 72 a2 0d 00 00 00 01 0f 31 00 0f 31 00 00  |  ..r.......1..1..
     ## 112  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  |  ................ 
     ## >> Encrypted database
-    ##   0  :  f5 0c ab 3d 1f ef dd 74 e9 8d 8c 9b 0d e6 5c 2c  |  ...=...t......\,
-    ##  16  :  0a 2b 10 57 8a 5c af 57 43 a2 cb b9 af bb ef 8c  |  .+.W.\.WC.......
-    ##  32  :  3c 8b ae 72 d7 75 e6 4c ff 1e ba d8 41 f5 e1 4b  |  <..r.u.L....A..K
-    ##  48  :  f3 68 f3 db 81 3c 7b 49 49 8d e4 d4 22 a4 21 c4  |  .h...<{II...".!.
-    ##  64  :  a1 f3 4e ff 89 31 56 a7 90 de 49 da 20 8e 6b 22  |  ..N..1V...I. .k"
-    ##  80  :  a2 e6 51 b3 f8 9a d5 b5 de 03 13 51 05 93 c2 2d  |  ..Q........Q...-
-    ##  96  :  9a 6c ed 60 82 bc e2 4e 5e f1 e6 82 f3 2d ba 1e  |  .l.`...N^....-..
-    ## 112  :  53 c4 f9 ac da 5e 72 fe e6 6e dd 97 59 42 0d 13  |  S....^r..n..YB..
+    ##   0  :  3c 51 78 4c fb 3d 0e 79 a8 6e cd f0 d7 2b 34 1c  |  <QxL.=.y.n...+4.
+    ##  16  :  c4 d0 99 f4 ee 37 20 00 f3 ef c3 d0 9d 33 81 0a  |  .....7 ......3..
+    ##  32  :  04 47 f0 25 85 9a 90 a9 a9 38 6a ad 04 37 02 2d  |  .G.%.....8j..7.-
+    ##  48  :  a0 4a 10 b2 63 62 0b 3e 62 ab 6e 31 9c a8 ae 67  |  .J..cb.>b.n1...g
+    ##  64  :  f0 8c 74 90 eb 43 89 9b 31 2b a5 9e 46 f7 ef 7e  |  ..t..C..1+..F..~
+    ##  80  :  4c 16 0b 67 c1 81 5e 29 64 92 3a 68 85 a8 33 ba  |  L..g..^)d.:h..3.
+    ##  96  :  af d1 79 ab 26 90 a4 fa 1d 49 97 d7 ab 9c 1a 62  |  ..y.&....I.....b
+    ## 112  :  21 c6 c9 44 ea ec 94 c5 71 6d c8 08 e7 1c b8 0b  |  !..D....qm......
 
 ``` r
 file.remove(tmp_plain)

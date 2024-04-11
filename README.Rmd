@@ -20,23 +20,25 @@ pkgload::load_all()
 ![GitHub](https://img.shields.io/github/license/bpvgoncalves/RSQLCipher?color=black&label=License)
 <!-- badges: end -->
 
-Embeds the SQLCipher database engine in R and provides an interface compliant with the DBI package. 
-[SQLCipher](https://www.zetetic.net/sqlcipher/open-source/) is an open source library that provides 
-transparent and secure 256-bit AES encryption of SQLite database files. [SQLite](https://www.sqlite.org/index.html) 
-is a public-domain, single-user, very light-weight database engine that implements a decent subset 
-of the SQL 92 standard, including the core table creation, updating, insertion, and selection
-operations, plus transaction management.  
+RSQLCipher embeds the SQLCipher database engine in R and provides an interface compliant with the
+DBI package.
+[SQLCipher](https://www.zetetic.net/sqlcipher/open-source/) is an open-source library that provides
+transparent and secure 256-bit AES encryption of SQLite database files.
+[SQLite](https://www.sqlite.org/index.html) is a public-domain, single-user, very light-weight
+database engine that implements a decent subset of the SQL 92 standard, including the core table 
+creation, updating, insertion, and selection operations, plus transaction management.
 
-This project started as a fork from the amazing [RSQLite](https://rsqlite.r-dbi.org) package for 
-which its authors deserve full credit. It is intended to keep this package updated with new updates
-to the RSQLite package to keep both as much compatible as possible.
+This project started as a fork of the amazing [RSQLite](https://rsqlite.r-dbi.org) package, for 
+which its authors deserve full credit. 
+It is intended to keep this package updated with new updates to the RSQLite package to keep both as
+compatible as possible.
 
 This package allows for the use of regular SQLite database files or encrypted ones.
 
 Currently, only the following differences exist between both drivers:
 
 - `dbConnect()` with `RSQLCipher()` driver accepts the parameter `key` when creating a new
-encrypted database or opening a connection to a existing one.
+encrypted database or opening a connection to an existing one.
 
 - There are 3 RSQLCipher specific functions:
 
