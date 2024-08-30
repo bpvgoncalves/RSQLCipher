@@ -46,9 +46,15 @@
 #' @param extended_types When `TRUE` columns of type `DATE`, `DATETIME` /
 #' `TIMESTAMP`, and `TIME` are mapped to corresponding R-classes, c.f. below
 #' for details. Defaults to `FALSE`.
-#' @param key  When different from NULL (no encryption) a character string of
-#' size 64, containing 32 hex encoded characters to be used as key for database
-#' encryption.
+#' @param key  When different from `NULL` (no encryption, default), a character
+#' string containing one of the following:
+#'  (i) a character string to be used as password. PBKDF2 is applied to generate
+#' a key from the entered string, or
+#'  (ii) a character string of size 64, containing 32 hex encoded characters to
+#' be used directly as key for database encryption, or
+#'  (iii) a character string of size 96, containing 32 hex encoded characters to
+#' be used directly as key for database encryption and 16 hex encoded characters
+#' to be used as salt.
 #'
 #' @return `dbConnect()` returns an object of class [SQLiteConnection-class].
 #'
@@ -124,23 +130,24 @@ dbConnect_SQLiteDriver <- function(drv, dbname = "", ..., loadable.extensions = 
 
   ## experimental PRAGMAs
   if (!is.null(key)) {
-    if (is.hex(key)) {
-      key <- gsub(" ", "", key, fixed = TRUE) # eliminate potential spaces to eval len
-      if (nchar(key) == 64) {
-        tryCatch(
-          dbExecute(conn, sprintf("PRAGMA key = \"x'%s'\";", key)),
-          error = function(e) {
-            warning("Couldn't set key for database: ", conditionMessage(e), "\n",
-                    "Use `key` = NULL to turn off this warning.",
-                    call. = FALSE
-            )
-          }
-        )
-      } else {
-        warning("Cannot use database encryption. The 'key' provided has invalid length.")
-      }
+
+    type <- key_type(key)
+    if (is.na(type)) {
+      warning("The 'key' provided is not valid. Continuing with plain database.")
     } else {
-      warning("Cannot use database encryption. The 'key' provided has invalid type.")
+      tryCatch({
+        if (type == "key") {
+          dbExecute(conn, sprintf("PRAGMA key = \"x'%s'\";", key))
+        } else {
+          dbExecute(conn, sprintf("PRAGMA key = '%s';", key))
+        }
+      },
+      error = function(e) {
+        warning("Couldn't set key for database: ", conditionMessage(e), "\n",
+                "Use `key` = NULL to turn off this warning.",
+                call. = FALSE)
+        }
+      )
     }
   }
 

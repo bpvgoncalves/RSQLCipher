@@ -99,9 +99,15 @@ integers.}
 \code{TIMESTAMP}, and \code{TIME} are mapped to corresponding R-classes, c.f. below
 for details. Defaults to \code{FALSE}.}
 
-\item{key}{When different from NULL (no encryption) a character string of
-size 64, containing 32 hex encoded characters to be used as key for database
-encryption.}
+\item{key}{When different from \code{NULL} (no encryption, default), a character
+string containing one of the following:
+(i) a character string to be used as password. PBKDF2 is applied to generate
+a key from the entered string, or
+(ii) a character string of size 64, containing 32 hex encoded characters to
+be used directly as key for database encryption, or
+(iii) a character string of size 96, containing 32 hex encoded characters to
+be used directly as key for database encryption and 16 hex encoded characters
+to be used as salt.}
 }
 \value{
 \code{SQLCipher()} returns an object of class \linkS4class{SQLiteDriver}.
