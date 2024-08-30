@@ -1,11 +1,11 @@
-#' databaseKeyRemove
+#' Database Key Management - Remove Key
 #'
 #' Creates an unencrypted/plain copy of an existing encrypted database.
 #' *THIS FUNCTION MAY TAKE LONG FOR BIG DATABASE FILES*
 #'
 #' @param conn  Connection to an existing encrypted database to be decrypted.
-#' @param file  Optional, path to the new decrypted database. A temporary file will be generated if
-#' not provided.
+#' @param file  Optional, path to the new decrypted database. A temporary file
+#' will be generated if not provided.
 #'
 #' @usage NULL
 #' @returns A named list with True/False and the file name of the plain database
