@@ -25,3 +25,19 @@ is.hex <- function(x) {
     return((nchar(x) %% 2 == 0) && (!grepl("[^0-9A-Fa-f]", x)))
   }
 }
+
+key_type <- function(x) {
+
+  if (is.null(x)) return(NA)
+
+  if (is.na(x)) return(NA)
+
+  x_new <- gsub(" ", "", x, fixed = TRUE)
+  if (is.hex(x) & (nchar(x_new) == 64 | nchar(x_new) == 96)) {
+    return("key")
+  } else if (is.character(x)){
+    return("pass")
+  } else {
+    return(NA)
+  }
+}
