@@ -2,22 +2,29 @@
 % Please edit documentation in R/databaseKeyChange.R
 \name{databaseKeyChange}
 \alias{databaseKeyChange}
-\title{databaseKeyChange}
+\title{Database Key Management - Change Key}
 \arguments{
 \item{conn}{database Connection}
 
-\item{old_key}{Old database key, a character string of size 64, containing
-32 hex encoded characters currently used as key for the database.
-encryption.}
+\item{old_key}{The string currently used as key.}
 
-\item{new_key}{New database key, a character string of size 64, containing
-32 hex encoded characters to be used as new key for the database.}
+\item{new_key}{A string to be used as new key, be one of:
+(i) a character string to be used as password. PBKDF2 is applied to generate
+a key from the entered string, or
+(ii) a character string of size 64, containing 32 hex encoded characters to
+be used directly as key for database encryption, or
+(iii) a character string of size 96, containing 32 hex encoded characters to
+be used directly as key for database encryption and 16 hex encoded characters
+to be used as salt.}
 }
 \value{
 True if successful or False otherwise#'
 }
 \description{
 Changes the key for an encrypted database.
+IMPORTANT: Currently it is not possible to change keys from different types,
+i.e., if the original key is a password the new key MUST be a password and
+if the original key is an hex key, the new key MUST be a hex key as well.
 }
 \examples{
   key_1 <- "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"

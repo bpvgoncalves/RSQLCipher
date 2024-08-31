@@ -2,12 +2,12 @@
 % Please edit documentation in R/databaseKeyRemove.R
 \name{databaseKeyRemove}
 \alias{databaseKeyRemove}
-\title{databaseKeyRemove}
+\title{Database Key Management - Remove Key}
 \arguments{
 \item{conn}{Connection to an existing encrypted database to be decrypted.}
 
-\item{file}{Optional, path to the new decrypted database. A temporary file will be generated if
-not provided.}
+\item{file}{Optional, path to the new decrypted database. A temporary file
+will be generated if not provided.}
 }
 \value{
 A named list with True/False and the file name of the plain database

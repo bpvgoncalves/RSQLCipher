@@ -2,18 +2,25 @@
 % Please edit documentation in R/databaseKeyAdd.R
 \name{databaseKeyAdd}
 \alias{databaseKeyAdd}
-\title{databaseKeyAdd}
+\title{Database Key Management - Add Key}
 \arguments{
 \item{conn}{Connection to an existing (plain) database to be encrypted.}
 
-\item{key}{New key to encrypt the database, a character string of size 64, containing 32
-hex-encoded characters to be used as new key for the database.}
+\item{key}{A character string containing one of the following:
+(i) a character string to be used as password. PBKDF2 is applied to generate
+a key from the entered string, or
+(ii) a character string of size 64, containing 32 hex encoded characters to
+be used directly as key for database encryption, or
+(iii) a character string of size 96, containing 32 hex encoded characters to
+be used directly as key for database encryption and 16 hex encoded characters
+to be used as salt.}
 
-\item{file}{Optional, path to the new encrypted database. A temporary file will be generated if
-not provided.}
+\item{file}{Optional, path to the new encrypted database. A temporary file
+will be generated if not provided.}
 }
 \value{
-A named list with True/False and the file name of the encrypted database
+A named list with True/False and the file name of the encrypted
+database
 }
 \description{
 Creates an encrypted copy of an existing database, using the provided key.
