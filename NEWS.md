@@ -1,4 +1,11 @@
-# RSQLCipher (development version)
+# RSQLCipher 0.3.0
+
+## Features
+- Added support for different types of keys: password and long hex key (key+salt).
+
+## Other
+- Update bundled SQLCipher to version 4.6.1 (SQLite 3.46.1).
+- Patch vendor code to avoid compiler errors on void* arithmetic.
 
 # RSQLCipher 0.2.1
 
