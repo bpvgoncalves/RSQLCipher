@@ -1,6 +1,6 @@
 test_that("adding support for uuid functions", {
   con <- dbConnect(
-    SQLite()
+    SQLCipher()
   )
 
   on.exit(

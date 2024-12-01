@@ -176,7 +176,7 @@ test_that("mark UTF-8 encoding on non-ASCII colnames", {
 
 test_that("dbFetch with statement other than SELECT warns reasonably (#523)", {
   memoise::forget(warning_once)
-  con <- dbConnect(SQLite(), ":memory:")
+  con <- dbConnect(SQLCipher(), ":memory:")
   on.exit(dbDisconnect(con), add = TRUE)
 
   dbWriteTable(con, "t1", data.frame(x = 1, y = 2))
