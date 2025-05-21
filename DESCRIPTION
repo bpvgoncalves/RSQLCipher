@@ -1,6 +1,6 @@
 Package: RSQLCipher
 Title: SQLCipher Interface for R
-Version: 0.3.0.9000
+Version: 0.3.0.9001
 Authors@R: c(
     person("Bruno", "Gonçalves", , "bpvgoncalves@users.noreply.github.com", role = "aut",
            comment = c(ORCID = "0000-0002-0797-7717")),
@@ -51,8 +51,10 @@ Imports:
     rlang
 Suggests: 
     callr,
+    cli,
     covr,
     DBItest (>= 1.8.0),
+    decor,
     gert,
     gh,
     hms,
