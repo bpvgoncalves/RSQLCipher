@@ -41,6 +41,7 @@ OBJECTS      = affinity.o                       \
                ext-math.o                       \
                ext-regexp.o                     \
                ext-series.o                     \
+               ext-uuid.o                       \
                import-file.o                    \
                result.o                         \
                rsqlite.o                        \
