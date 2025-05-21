@@ -6,7 +6,7 @@
 #' Extensions must be enabled separately for each connection.
 #'
 #' The `"math"` extension functions are written by Liam Healy and made available
-#' through the SQLite website (\url{https://www.sqlite.org/contrib}).
+#' through the SQLite website (\url{https://www.sqlite.org/src/ext/contrib}).
 #' This package contains a slightly modified version of the original code.
 #' See the section "Available functions in the math extension" for details.
 #'
@@ -78,8 +78,8 @@
 #' dbGetQuery(db, "SELECT * FROM tbl")
 #'
 #' # uuid
-#' db <- dbConnect(RSQLite::SQLite())
-#' RSQLite::initExtension(db, "uuid")
+#' db <- dbConnect(RSQLCipher::SQLCipher())
+#' RSQLCipher::initExtension(db, "uuid")
 #' dbGetQuery(db, "SELECT uuid();")
 #' dbDisconnect(db)
 initExtension <- function(db, extension = c("math", "regexp", "series", "csv", "uuid")) {
