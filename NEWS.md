@@ -1,4 +1,13 @@
-# RSQLCipher (development version)
+# RSQLCipher 0.4.0
+
+## Features
+- Included support for uuid extension (from RSQLite).
+- Add Id method to dbExistsTable() (from RSQLite).
+- **Breaking change**: Avoid appending a numeric suffix to duplicate column names (from RSQLite).
+
+## Other
+- Update bundled SQLCipher to version 4.9.0 (SQLite 3.49.2).
+- Code synced with RSQLite repo.
 
 # RSQLCipher 0.3.0
 
