@@ -8,7 +8,7 @@ NULL
 
 #' Connect to an encrypted SQLite database
 #'
-#' Together, `SQLCipher()` and `dbConnect()` allow you to connect to an
+#' Together, `SQLCipher()` and [DBI::dbConnect()] allow you to connect to an
 #' encrypted SQLite database file. See [DBI::dbSendQuery()] for how to issue
 #' queries and receive results.
 #'
@@ -22,10 +22,10 @@ NULL
 #'
 #' @export
 #' @param ... In previous versions, `SQLCipher()` took arguments. These
-#'   have now all been moved to [dbConnect()], and any arguments here
+#'   have now all been moved to `dbConnect()`, and any arguments here
 #'   will be ignored with a warning.
 #'
-#' @return `SQLCipher()` returns an object of class [SQLiteDriver-class].
+#' @return `SQLCipher()` returns an object of class `SQLiteDriver-class`.
 #' @import methods DBI
 #' @aliases RSQLCipher RSQLCipher-package
 SQLCipher <- function(...) {

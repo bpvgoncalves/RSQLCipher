@@ -31,6 +31,6 @@ An SQL string
 }
 \description{
 The output SQL statement is a simple \verb{CREATE TABLE} suitable for
-\code{dbGetQuery}
+\link[DBI:dbGetQuery]{DBI::dbGetQuery}
 }
 \keyword{internal}

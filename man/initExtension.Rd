@@ -4,7 +4,7 @@
 \alias{initExtension}
 \title{Add useful extension functions}
 \usage{
-initExtension(db, extension = c("math", "regexp", "series", "csv"))
+initExtension(db, extension = c("math", "regexp", "series", "csv", "uuid"))
 }
 \arguments{
 \item{db}{A \code{\linkS4class{SQLiteConnection}} object to load these extensions into.}
@@ -19,7 +19,7 @@ Extensions must be enabled separately for each connection.
 }
 \details{
 The \code{"math"} extension functions are written by Liam Healy and made available
-through the SQLite website (\url{https://www.sqlite.org/contrib}).
+through the SQLite website (\url{https://www.sqlite.org/src/ext/contrib}).
 This package contains a slightly modified version of the original code.
 See the section "Available functions in the math extension" for details.
 
@@ -38,6 +38,11 @@ The \code{"csv"} extension loads the function \code{csv()} that can be used to c
 virtual tables,
 as available through the SQLite source code repository
 (\url{https://sqlite.org/src/file?filename=ext/misc/csv.c}).
+
+The \code{"uuid"} extension loads the functions \code{uuid()}, \code{uuid_str(X)} and
+\code{uuid_blob(X)} that can be used to create universally unique identifiers,
+as available through the SQLite source code repository
+(\url{https://sqlite.org/src/file?filename=ext/misc/uuid.c}).
 }
 \section{Available functions in the math extension}{
 
@@ -82,4 +87,10 @@ sql <- paste0(
 )
 dbExecute(db, sql)
 dbGetQuery(db, "SELECT * FROM tbl")
+
+# uuid
+db <- dbConnect(RSQLCipher::SQLCipher())
+RSQLCipher::initExtension(db, "uuid")
+dbGetQuery(db, "SELECT uuid();")
+dbDisconnect(db)
 }

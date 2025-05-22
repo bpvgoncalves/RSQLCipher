@@ -1,6 +1,6 @@
 #' Make R/S-Plus identifiers into legal SQL identifiers
 #'
-#' Deprecated. Please use [dbQuoteIdentifier()] instead.
+#' Deprecated. Please use [DBI::dbQuoteIdentifier()] instead.
 #'
 #' @keywords internal
 #' @rdname keywords-dep

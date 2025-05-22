@@ -4,7 +4,7 @@ NULL
 #' Build the SQL CREATE TABLE definition as a string
 #'
 #' The output SQL statement is a simple `CREATE TABLE` suitable for
-#' `dbGetQuery`
+#' [DBI::dbGetQuery]
 #'
 #' @param con A database connection.
 #' @param name Name of the new SQL table
@@ -61,8 +61,8 @@ isIdCurrent <- function(obj) {
 #' Deprecated querying tools
 #'
 #' These functions have been deprecated. Please switch to using
-#' [dbSendQuery()]/[dbGetQuery()] with the `params` argument
-#' or with calling [dbBind()] instead.
+#' [DBI::dbSendQuery()]/[DBI::dbGetQuery()] with the `params` argument
+#' or with calling [DBI::dbBind()] instead.
 #'
 #' @keywords internal
 #' @name query-dep

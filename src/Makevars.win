@@ -15,6 +15,9 @@ PKG_CPPFLAGS = -I.                              \
                -DHAVE_USLEEP=1                  \
                -DSQLITE_HAS_CODEC               \
                -DSQLITE_TEMP_STORE=3            \
+               -DSQLITE_THREADSAFE=1            \
+               -DSQLITE_EXTRA_INIT=sqlcipher_extra_init          \
+               -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown
 
 PKG_CXXFLAGS = $(CXX_VISIBILITY)
 
@@ -37,6 +40,7 @@ OBJECTS      = affinity.o                       \
                ext-math.o                       \
                ext-regexp.o                     \
                ext-series.o                     \
+               ext-uuid.o                       \
                import-file.o                    \
                result.o                         \
                rsqlite.o                        \

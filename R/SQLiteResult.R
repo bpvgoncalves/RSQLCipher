@@ -1,9 +1,9 @@
 #' Class SQLiteResult (and methods)
 #'
-#' SQLiteDriver objects are created by [dbSendQuery()] or [dbSendStatement()],
+#' SQLiteDriver objects are created by [DBI::dbSendQuery()] or [DBI::dbSendStatement()],
 #' and encapsulate the result of an SQL statement (either `SELECT` or not).
-#' They are a superclass of the [DBIResult-class] class.
-#' The "Usage" section lists the class methods overridden by \pkg{RSQLite}.
+#' They are a superclass of the [DBI::DBIResult-class] class.
+#' The "Usage" section lists the class methods overridden by \pkg{RSQLCipher}.
 #'
 #' @seealso
 #' The corresponding generic functions
