@@ -2,7 +2,7 @@
 #'
 #' SQLiteConnection objects are created by passing [SQLCipher()] as first
 #' argument to [DBI::dbConnect()].
-#' They are a superclass of the [DBIConnection-class] class.
+#' They are a superclass of the [DBI::DBIConnection-class] class.
 #' The "Usage" section lists the class methods overridden by \pkg{RSQLite}.
 #'
 #' @seealso

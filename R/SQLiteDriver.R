@@ -6,11 +6,11 @@ NULL
 #' Class SQLiteDriver (and methods)
 #'
 #' SQLiteDriver objects are created by [SQLCipher()], and used to select the
-#' correct method in [dbConnect()].
-#' They are a superclass of the [DBIDriver-class] class,
+#' correct method in [DBI::dbConnect()].
+#' They are a superclass of the [DBI::DBIDriver-class] class,
 #' and used purely for dispatch.
-#' The "Usage" section lists the class methods overridden by \pkg{RSQLite}.
-#' The [dbUnloadDriver()] method is a null-op.
+#' The "Usage" section lists the class methods overridden by \pkg{RSQLCipher}.
+#' The [DBI::dbUnloadDriver()] method is a null-op.
 #'
 #' @keywords internal
 #' @export
