@@ -108531,15 +108531,15 @@ struct private_block {
  * https://prng.di.unimi.it/ under the public domain via https://prng.di.unimi.it/xoshiro256plusplus.c
  * xoshiro is NEVER used for any cryptographic functions as CSPRNG. It is solely used for
  * generating random data for testing, debugging, and forensic purposes (overwriting memory segments) */
-static volatile uint64_t xoshiro_s[4];
+static volatile sqlite_uint64 xoshiro_s[4];
 
-static inline uint64_t xoshiro_rotl(const uint64_t x, int k) {
+static inline sqlite_uint64 xoshiro_rotl(const sqlite_uint64 x, int k) {
   return (x << k) | (x >> (64 - k));
 }
 
-uint64_t xoshiro_next(void) {
-  volatile uint64_t result = xoshiro_rotl(xoshiro_s[0] + xoshiro_s[3], 23) + xoshiro_s[0];
-  volatile uint64_t t = xoshiro_s[1] << 17;
+sqlite_uint64 xoshiro_next(void) {
+  volatile sqlite_uint64 result = xoshiro_rotl(xoshiro_s[0] + xoshiro_s[3], 23) + xoshiro_s[0];
+  volatile sqlite_uint64 t = xoshiro_s[1] << 17;
 
   xoshiro_s[2] ^= xoshiro_s[0];
   xoshiro_s[3] ^= xoshiro_s[1];
@@ -108554,7 +108554,7 @@ uint64_t xoshiro_next(void) {
 }
 
 static void xoshiro_randomness(unsigned char *ptr, int sz) {
-  volatile uint64_t val;
+  volatile sqlite_uint64 val;
   volatile int to_copy;
   while (sz > 0) {
     val = xoshiro_next();
@@ -109054,11 +109054,11 @@ static void sqlcipher_mlock(void *ptr, sqlite_uint64 sz) {
 
   if(ptr == NULL || sz == 0) return;
 
-  sqlcipher_log(SQLCIPHER_LOG_TRACE, SQLCIPHER_LOG_MEMORY, "sqlcipher_mlock: calling mlock(%p,%lu); _SC_PAGESIZE=%lu", ptr - offset, sz + offset, pagesize);
-  rc = mlock(ptr - offset, sz + offset);
+  sqlcipher_log(SQLCIPHER_LOG_TRACE, SQLCIPHER_LOG_MEMORY, "sqlcipher_mlock: calling mlock(%p,%lu); _SC_PAGESIZE=%lu", (unsigned long) ptr - offset, sz + offset, pagesize);
+  rc = mlock((int *)(unsigned long) ptr - offset, sz + offset);
   if(rc!=0) {
     sqlcipher_log(SQLCIPHER_LOG_WARN, SQLCIPHER_LOG_MEMORY, "sqlcipher_mlock: mlock() returned %d errno=%d", rc, errno);
-    sqlcipher_log(SQLCIPHER_LOG_INFO, SQLCIPHER_LOG_MEMORY, "sqlcipher_mlock: mlock(%p,%lu) returned %d errno=%d", ptr - offset, sz + offset, rc, errno);
+    sqlcipher_log(SQLCIPHER_LOG_INFO, SQLCIPHER_LOG_MEMORY, "sqlcipher_mlock: mlock(%p,%lu) returned %d errno=%d", (unsigned long) ptr - offset, sz + offset, rc, errno);
   }
 #elif defined(_WIN32)
 #if !(defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP || WINAPI_FAMILY == WINAPI_FAMILY_PC_APP))
@@ -109083,10 +109083,10 @@ static void sqlcipher_munlock(void *ptr, sqlite_uint64 sz) {
 
   if(ptr == NULL || sz == 0) return;
 
-  sqlcipher_log(SQLCIPHER_LOG_TRACE, SQLCIPHER_LOG_MEMORY, "sqlcipher_munlock: calling munlock(%p,%lu)", ptr - offset, sz + offset);
-  rc = munlock(ptr - offset, sz + offset);
+  sqlcipher_log(SQLCIPHER_LOG_TRACE, SQLCIPHER_LOG_MEMORY, "sqlcipher_munlock: calling munlock(%p,%lu)", (unsigned long) ptr - offset, sz + offset);
+  rc = munlock((int *)(unsigned long) ptr - offset, sz + offset);
   if(rc!=0) {
-    sqlcipher_log(SQLCIPHER_LOG_INFO, SQLCIPHER_LOG_MEMORY, "sqlcipher_munlock: munlock(%p,%lu) returned %d errno=%d", ptr - offset, sz + offset, rc, errno);
+    sqlcipher_log(SQLCIPHER_LOG_INFO, SQLCIPHER_LOG_MEMORY, "sqlcipher_munlock: munlock(%p,%lu) returned %d errno=%d", (unsigned long) ptr - offset, sz + offset, rc, errno);
   }
 #elif defined(_WIN32)
 #if !(defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP || WINAPI_FAMILY == WINAPI_FAMILY_PC_APP))
