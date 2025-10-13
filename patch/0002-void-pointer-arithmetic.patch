@@ -1,0 +1,50 @@
+From 509abc2b14e6e5441da4a0de9c0f1c64911bd053 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Bruno=20Gon=C3=A7alves?=
+ <bpvgoncalves@users.noreply.github.com>
+Date: Tue, 5 Aug 2025 01:56:58 +0200
+Subject: [PATCH 2/2] fix: apply patch to void* arithmetic
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Bruno Gonçalves <bpvgoncalves@users.noreply.github.com>
+---
+ src/vendor/sqlite3/sqlite3.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/src/vendor/sqlite3/sqlite3.c b/src/vendor/sqlite3/sqlite3.c
+index c1dac96e..30445a40 100644
+--- a/src/vendor/sqlite3/sqlite3.c
++++ b/src/vendor/sqlite3/sqlite3.c
+@@ -109055,11 +109055,11 @@ static void sqlcipher_mlock(void *ptr, sqlite_uint64 sz) {
+ 
+   if(ptr == NULL || sz == 0) return;
+ 
+-  sqlcipher_log(SQLCIPHER_LOG_TRACE, SQLCIPHER_LOG_MEMORY, "sqlcipher_mlock: calling mlock(%p,%lu); _SC_PAGESIZE=%lu", ptr - offset, sz + offset, pagesize);
+-  rc = mlock(ptr - offset, sz + offset);
++  sqlcipher_log(SQLCIPHER_LOG_TRACE, SQLCIPHER_LOG_MEMORY, "sqlcipher_mlock: calling mlock(%p,%lu); _SC_PAGESIZE=%lu", (unsigned long) ptr - offset, sz + offset, pagesize);
++  rc = mlock((int *)(unsigned long) ptr - offset, sz + offset);
+   if(rc!=0) {
+     sqlcipher_log(SQLCIPHER_LOG_WARN, SQLCIPHER_LOG_MEMORY, "sqlcipher_mlock: mlock() returned %d errno=%d", rc, errno);
+-    sqlcipher_log(SQLCIPHER_LOG_INFO, SQLCIPHER_LOG_MEMORY, "sqlcipher_mlock: mlock(%p,%lu) returned %d errno=%d", ptr - offset, sz + offset, rc, errno);
++    sqlcipher_log(SQLCIPHER_LOG_INFO, SQLCIPHER_LOG_MEMORY, "sqlcipher_mlock: mlock(%p,%lu) returned %d errno=%d", (unsigned long) ptr - offset, sz + offset, rc, errno);
+   }
+ #elif defined(_WIN32)
+ #if !(defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP || WINAPI_FAMILY == WINAPI_FAMILY_PC_APP))
+@@ -109084,10 +109084,10 @@ static void sqlcipher_munlock(void *ptr, sqlite_uint64 sz) {
+ 
+   if(ptr == NULL || sz == 0) return;
+ 
+-  sqlcipher_log(SQLCIPHER_LOG_TRACE, SQLCIPHER_LOG_MEMORY, "sqlcipher_munlock: calling munlock(%p,%lu)", ptr - offset, sz + offset);
+-  rc = munlock(ptr - offset, sz + offset);
++  sqlcipher_log(SQLCIPHER_LOG_TRACE, SQLCIPHER_LOG_MEMORY, "sqlcipher_munlock: calling munlock(%p,%lu)", (unsigned long) ptr - offset, sz + offset);
++  rc = munlock((int *)(unsigned long) ptr - offset, sz + offset);
+   if(rc!=0) {
+-    sqlcipher_log(SQLCIPHER_LOG_INFO, SQLCIPHER_LOG_MEMORY, "sqlcipher_munlock: munlock(%p,%lu) returned %d errno=%d", ptr - offset, sz + offset, rc, errno);
++    sqlcipher_log(SQLCIPHER_LOG_INFO, SQLCIPHER_LOG_MEMORY, "sqlcipher_munlock: munlock(%p,%lu) returned %d errno=%d", (unsigned long) ptr - offset, sz + offset, rc, errno);
+   }
+ #elif defined(_WIN32)
+ #if !(defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP || WINAPI_FAMILY == WINAPI_FAMILY_PC_APP))
+-- 
+2.50.1
+
