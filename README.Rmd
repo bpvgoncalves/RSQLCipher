@@ -40,7 +40,9 @@ Currently, only the following differences exist between both drivers:
 - `dbConnect()` with `RSQLCipher()` driver accepts the parameter `key` when creating a new
 encrypted database or opening a connection to an existing one.
 
-- There are 3 RSQLCipher specific functions:
+- There are 4 RSQLCipher specific functions:
+
+  - `databaseIsEncryptionOn()`, to check if a database/connection has encryption set.
 
   - `databaseKeyAdd()`, to create an encrypted copy of an existing plain database.
   
@@ -83,6 +85,10 @@ tmp_enc <- tempfile()
 con_enc <- dbConnect(RSQLCipher::SQLCipher(), 
                      tmp_enc, 
                      key = "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF") 
+
+# Check encryption status
+databaseIsEncryptionOn(con_plain)
+databaseIsEncryptionOn(con_enc)
 
 # Both databases behave the same on regular usage...
 dbWriteTable(con_plain, "mtcars", mtcars)
