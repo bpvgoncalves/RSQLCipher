@@ -42,7 +42,10 @@ Currently, only the following differences exist between both drivers:
   when creating a new encrypted database or opening a connection to an
   existing one.
 
-- There are 3 RSQLCipher specific functions:
+- There are 4 RSQLCipher specific functions:
+
+  - `databaseIsEncryptionOn()`, to check if a database/connection has
+    encryption set.
 
   - `databaseKeyAdd()`, to create an encrypted copy of an existing plain
     database.
@@ -53,8 +56,11 @@ Currently, only the following differences exist between both drivers:
     database.
 
 <!-- You can install the latest released version from CRAN with: -->
+
 <!-- ```R -->
+
 <!-- install.packages("RSQLCipher") -->
+
 <!-- ``` -->
 
 You can install the latest development version from GitHub with:
@@ -87,6 +93,19 @@ con_enc <- dbConnect(RSQLCipher::SQLCipher(),
                      tmp_enc, 
                      key = "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF") 
 
+# Check encryption status
+databaseIsEncryptionOn(con_plain)
+```
+
+    ## [1] FALSE
+
+``` r
+databaseIsEncryptionOn(con_enc)
+```
+
+    ## [1] TRUE
+
+``` r
 # Both databases behave the same on regular usage...
 dbWriteTable(con_plain, "mtcars", mtcars)
 dbWriteTable(con_enc, "mtcars", mtcars)
@@ -122,17 +141,17 @@ if ("hexView" %in% installed.packages()) {
     ##  48  :  00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 00  |  ................
     ##  64  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  |  ................
     ##  80  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01  |  ................
-    ##  96  :  00 2e 72 a2 0d 00 00 00 01 0f 31 00 0f 31 00 00  |  ..r.......1..1..
+    ##  96  :  00 2e 8d f9 0d 00 00 00 01 0f 31 00 0f 31 00 00  |  ..........1..1..
     ## 112  :  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  |  ................ 
     ## >> Encrypted database
-    ##   0  :  3c 51 78 4c fb 3d 0e 79 a8 6e cd f0 d7 2b 34 1c  |  <QxL.=.y.n...+4.
-    ##  16  :  c4 d0 99 f4 ee 37 20 00 f3 ef c3 d0 9d 33 81 0a  |  .....7 ......3..
-    ##  32  :  04 47 f0 25 85 9a 90 a9 a9 38 6a ad 04 37 02 2d  |  .G.%.....8j..7.-
-    ##  48  :  a0 4a 10 b2 63 62 0b 3e 62 ab 6e 31 9c a8 ae 67  |  .J..cb.>b.n1...g
-    ##  64  :  f0 8c 74 90 eb 43 89 9b 31 2b a5 9e 46 f7 ef 7e  |  ..t..C..1+..F..~
-    ##  80  :  4c 16 0b 67 c1 81 5e 29 64 92 3a 68 85 a8 33 ba  |  L..g..^)d.:h..3.
-    ##  96  :  af d1 79 ab 26 90 a4 fa 1d 49 97 d7 ab 9c 1a 62  |  ..y.&....I.....b
-    ## 112  :  21 c6 c9 44 ea ec 94 c5 71 6d c8 08 e7 1c b8 0b  |  !..D....qm......
+    ##   0  :  5c d7 0d 47 a2 16 cb f0 c1 34 9a db 09 28 2b 7b  |  \..G.....4...(+{
+    ##  16  :  5f 8b da 0d 80 21 df dd 4c bd a9 21 5a 3d 8b 38  |  _....!..L..!Z=.8
+    ##  32  :  35 25 ba c5 e1 e8 f9 41 27 7f 2f 72 17 9a cb 33  |  5%.....A'/r...3
+    ##  48  :  80 42 7f d1 c2 52 3d 21 bc 8f 7b 05 db 42 6d 79  |  .B..R=!..{..Bmy
+    ##  64  :  ec 15 a1 71 a0 c5 55 e1 d1 1f b3 a6 0a d3 fd 8c  |  ...q..U.........
+    ##  80  :  70 e0 40 7d 20 10 06 57 d5 0f e8 40 be c5 c0 db  |  p.@} ..W...@....
+    ##  96  :  50 60 96 12 fa d4 e9 48 7d 8f a5 b7 f4 c8 de 35  |  P`.....H}......5
+    ## 112  :  6f 4c 8e f2 2b 2a 25 06 da d1 12 5b f2 55 ae bd  |  oL..+*%....[.U..
 
 ``` r
 file.remove(tmp_plain)

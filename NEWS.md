@@ -1,3 +1,11 @@
+# RSQLCipher 0.4.3
+
+## Features
+- Added function `databaseIsEncryptionOn()` to check the database/connection encryption status.
+
+## Other
+- Update bundled SQLCipher to version 4.12.0 (SQLite 3.51.1).
+
 # RSQLCipher 0.4.2
 
 ## Other
