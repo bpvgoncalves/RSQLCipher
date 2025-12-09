@@ -1,6 +1,6 @@
 Package: RSQLCipher
 Title: SQLCipher Interface for R
-Version: 0.4.2.9001
+Version: 0.4.2.9002
 Authors@R: c(
     person("Bruno", "Gonçalves", , "bpvgoncalves@users.noreply.github.com", role = "aut",
            comment = c(ORCID = "0000-0002-0797-7717")),
@@ -89,6 +89,7 @@ Collate:
     'compatRowNames.R'
     'copy.R'
     'cpp11.R'
+    'databaseIsEncryptionOn.R'
     'databaseKeyAdd.R'
     'databaseKeyChange.R'
     'databaseKeyRemove.R'
