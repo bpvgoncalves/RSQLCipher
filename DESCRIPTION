@@ -1,6 +1,6 @@
 Package: RSQLCipher
 Title: SQLCipher Interface for R
-Version: 0.4.5
+Version: 0.4.5.9000
 Authors@R: c(
     person("Bruno", "Gonçalves", , "bpvgoncalves@users.noreply.github.com", role = "aut",
            comment = c(ORCID = "0000-0002-0797-7717")),
@@ -67,7 +67,6 @@ Suggests:
     xml2
 LinkingTo: 
     cpp11 (>= 0.4.0),
-    plogr (>= 0.2.0)
 VignetteBuilder: 
     knitr
 Remotes: 

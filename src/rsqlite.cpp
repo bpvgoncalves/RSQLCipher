@@ -12,8 +12,3 @@ cpp11::strings rsqliteVersion() {
       "library"_nm = sqlite3_libversion()
     });
 }
-
-[[cpp11::register]]
-void init_logging(const std::string& log_level) {
-  plog::init_r(log_level);
-}

@@ -22,6 +22,7 @@ register_misc_extension <- function(name) {
 }
 
 
+usethis::use_version("dev", FALSE)
 
 # Identify latest version and download source tar from Github
 html <- xml2::as_list(
