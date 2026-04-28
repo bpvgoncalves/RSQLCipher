@@ -144,14 +144,6 @@ extern "C" SEXP _RSQLCipher_rsqliteVersion() {
     return cpp11::as_sexp(rsqliteVersion());
   END_CPP11
 }
-// rsqlite.cpp
-void init_logging(const std::string& log_level);
-extern "C" SEXP _RSQLCipher_init_logging(SEXP log_level) {
-  BEGIN_CPP11
-    init_logging(cpp11::as_cpp<cpp11::decay_t<const std::string&>>(log_level));
-    return R_NilValue;
-  END_CPP11
-}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
@@ -162,7 +154,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_RSQLCipher_connection_release",           (DL_FUNC) &_RSQLCipher_connection_release,           1},
     {"_RSQLCipher_connection_valid",             (DL_FUNC) &_RSQLCipher_connection_valid,             1},
     {"_RSQLCipher_extension_load",               (DL_FUNC) &_RSQLCipher_extension_load,               3},
-    {"_RSQLCipher_init_logging",                 (DL_FUNC) &_RSQLCipher_init_logging,                 1},
     {"_RSQLCipher_result_bind",                  (DL_FUNC) &_RSQLCipher_result_bind,                  2},
     {"_RSQLCipher_result_column_info",           (DL_FUNC) &_RSQLCipher_result_column_info,           1},
     {"_RSQLCipher_result_create",                (DL_FUNC) &_RSQLCipher_result_create,                2},

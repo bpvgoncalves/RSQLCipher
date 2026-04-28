@@ -75,7 +75,3 @@ result_get_placeholder_names <- function(res) {
 rsqliteVersion <- function() {
   .Call(`_RSQLCipher_rsqliteVersion`)
 }
-
-init_logging <- function(log_level) {
-  invisible(.Call(`_RSQLCipher_init_logging`, log_level))
-}
