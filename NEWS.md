@@ -1,4 +1,8 @@
-# RSQLCipher (development version)
+# RSQLCipher 0.4.6
+
+## Other
+- Removed dependency: plogr
+- Update bundled SQLCipher to version 4.15.0 (SQLite 3.53.0).
 
 # RSQLCipher 0.4.5
 
