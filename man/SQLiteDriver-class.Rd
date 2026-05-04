@@ -29,6 +29,6 @@ correct method in \code{\link[DBI:dbConnect]{DBI::dbConnect()}}.
 They are a superclass of the \link[DBI:DBIDriver-class]{DBI::DBIDriver} class,
 and used purely for dispatch.
 The "Usage" section lists the class methods overridden by \pkg{RSQLCipher}.
-The \code{\link[DBI:dbDriver]{DBI::dbUnloadDriver()}} method is a null-op.
+The \code{\link[DBI:dbUnloadDriver]{DBI::dbUnloadDriver()}} method is a null-op.
 }
 \keyword{internal}
