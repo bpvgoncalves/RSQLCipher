@@ -92,7 +92,7 @@ read only mode.  Raise an error if the file does not already exist}
 \code{"unix-none"}.}
 
 \item{bigint}{The R type that 64-bit integer types should be mapped to,
-default is \link[bit64:bit64-package]{bit64::integer64}, which allows the full range of 64 bit
+default is \link[bit64:integer64]{bit64::integer64}, which allows the full range of 64 bit
 integers.}
 
 \item{extended_types}{When \code{TRUE} columns of type \code{DATE}, \code{DATETIME} /
@@ -112,7 +112,7 @@ to be used as salt.}
 \value{
 \code{SQLCipher()} returns an object of class \code{SQLiteDriver-class}.
 
-\code{dbConnect()} returns an object of class \linkS4class{SQLiteConnection}.
+\code{dbConnect()} returns an object of class \link[=SQLiteConnection-class]{SQLiteConnection}.
 }
 \description{
 Together, \code{SQLCipher()} and \code{\link[DBI:dbConnect]{DBI::dbConnect()}} allow you to connect to an
