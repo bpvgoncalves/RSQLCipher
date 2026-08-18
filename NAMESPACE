@@ -89,9 +89,13 @@ import(DBI)
 import(methods)
 import(rlang)
 importFrom(DBI,Id)
-importFrom(bit64,integer64)
-importFrom(bit64,is.integer64)
+importFrom(bit64,
+  integer64,
+  is.integer64
+)
 importFrom(blob,blob)
-importFrom(lifecycle,deprecate_soft)
-importFrom(lifecycle,deprecated)
+importFrom(lifecycle,
+  deprecate_soft,
+  deprecated
+)
 useDynLib(RSQLCipher, .registration = TRUE)
