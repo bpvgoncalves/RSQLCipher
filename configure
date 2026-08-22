@@ -5,11 +5,20 @@
 PKG_CFLAGS=""
 PKG_LIBS="-lcrypto"
 
-if [ `uname` = "Darwin" ]; then
-BREWDIR=`brew --prefix`
-PKG_CFLAGS="-I$BREWDIR/opt/openssl/include -I$BREWDIR/opt/openssl@1.1/include"
-PKG_LIBS="-L$BREWDIR/opt/openssl/lib -L$BREWDIR/opt/openssl@1.1/lib $PKG_LIBS"
+if [ "$(uname)" = "Darwin" ]; then
+  BREWDIR=$(brew --prefix)
 
+  # Try openssl@3 first (modern default), then openssl@1.1, then generic openssl
+  if [ -d "$BREWDIR/opt/openssl@3" ]; then
+    PKG_CFLAGS="-I$BREWDIR/opt/openssl@3/include"
+    PKG_LIBS="-L$BREWDIR/opt/openssl@3/lib -lcrypto"
+  elif [ -d "$BREWDIR/opt/openssl@1.1" ]; then
+    PKG_CFLAGS="-I$BREWDIR/opt/openssl@1.1/include"
+    PKG_LIBS="-L$BREWDIR/opt/openssl@1.1/lib -lcrypto"
+  elif [ -d "$BREWDIR/opt/openssl" ]; then
+    PKG_CFLAGS="-I$BREWDIR/opt/openssl/include"
+    PKG_LIBS="-L$BREWDIR/opt/openssl/lib -lcrypto"
+  fi
 fi
 
 echo "Using PKG_CFLAGS=$PKG_CFLAGS"
