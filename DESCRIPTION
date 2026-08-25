@@ -1,6 +1,6 @@
 Package: RSQLCipher
 Title: SQLCipher Interface for R
-Version: 0.4.7
+Version: 0.4.8
 Authors@R: c(
     person("Bruno", "Gonçalves", , "bpvgoncalves@users.noreply.github.com", role = "aut",
            comment = c(ORCID = "0000-0002-0797-7717")),
@@ -151,4 +151,4 @@ Collate:
     'utils.R'
     'version.R'
     'zzz.R'
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0

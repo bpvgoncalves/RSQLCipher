@@ -1,7 +1,7 @@
 From 21dabb03281659c3d62d978f394793ea38f2da6a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Bruno=20Gon=C3=A7alves?=
  <bpvgoncalves@users.noreply.github.com>
-Date: Tue, 5 Aug 2025 01:48:36 +0200
+Date: Tue, 25 Aug 2026 19:58:43 +0200
 Subject: [PATCH 1/2] fix: apply patch to invalid uint64_t definition
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -9,19 +9,34 @@ Content-Transfer-Encoding: 8bit
 
 Signed-off-by: Bruno Gonçalves <bpvgoncalves@users.noreply.github.com>
 ---
- src/vendor/sqlite3/sqlite3.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ src/vendor/sqlite3/sqlite3.c | 18 ++++++------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/src/vendor/sqlite3/sqlite3.c b/src/vendor/sqlite3/sqlite3.c
-index 5d4e16e5..c1dac96e 100644
+index f7bc39a7..b088cf27 100644
 --- a/src/vendor/sqlite3/sqlite3.c
 +++ b/src/vendor/sqlite3/sqlite3.c
-@@ -108532,15 +108532,15 @@ struct private_block {
-  * https://prng.di.unimi.it/ under the public domain via https://prng.di.unimi.it/xoshiro256plusplus.c
-  * xoshiro is NEVER used for any cryptographic functions as CSPRNG. It is solely used for
-  * generating random data for testing, debugging, and forensic purposes (overwriting memory segments) */
--static volatile uint64_t xoshiro_s[4];
-+static volatile sqlite_uint64 xoshiro_s[4];
+@@ -110990,32 +110990,32 @@ struct private_block {
+  *    anti-forensic spray */
+ 
+ #if defined(_MSC_VER)
+-static __declspec(thread) volatile uint64_t xoshiro_s[4];
++static __declspec(thread) volatile sqlite_uint64 xoshiro_s[4];
+ #else
+-static __thread volatile uint64_t xoshiro_s[4];
++static __thread volatile sqlite_uint64 xoshiro_s[4];
+ #endif
+ 
+ /* splitmix64 is recommended as the seed generator for xoshiro
+  * based on public domain implementation at https://prng.di.unimi.it/splitmix64.c */
+-static uint64_t splitmix64(uint64_t *x) {
+-  uint64_t z = (*x += 0x9e3779b97f4a7c15ULL);
++static sqlite_uint64 splitmix64(sqlite_uint64 *x) {
++  sqlite_uint64 z = (*x += 0x9e3779b97f4a7c15ULL);
+   z = (z ^ (z >> 30)) * 0xbf58476d1ce4e5b9ULL;
+   z = (z ^ (z >> 27)) * 0x94d049bb133111ebULL;
+   return z ^ (z >> 31);
+ }
  
 -static inline uint64_t xoshiro_rotl(const uint64_t x, int k) {
 +static inline sqlite_uint64 xoshiro_rotl(const sqlite_uint64 x, int k) {
@@ -29,15 +44,20 @@ index 5d4e16e5..c1dac96e 100644
  }
  
 -uint64_t xoshiro_next(void) {
--  volatile uint64_t result = xoshiro_rotl(xoshiro_s[0] + xoshiro_s[3], 23) + xoshiro_s[0];
--  volatile uint64_t t = xoshiro_s[1] << 17;
+-  volatile uint64_t result, t;
 +sqlite_uint64 xoshiro_next(void) {
-+  volatile sqlite_uint64 result = xoshiro_rotl(xoshiro_s[0] + xoshiro_s[3], 23) + xoshiro_s[0];
-+  volatile sqlite_uint64 t = xoshiro_s[1] << 17;
- 
-   xoshiro_s[2] ^= xoshiro_s[0];
-   xoshiro_s[3] ^= xoshiro_s[1];
-@@ -108555,7 +108555,7 @@ uint64_t xoshiro_next(void) {
++  volatile sqlite_uint64 result, t;
+   /* if the state has not been initialized (all zeros), seed */
+   if(!(xoshiro_s[0] | xoshiro_s[1] | xoshiro_s[2] | xoshiro_s[3])) {
+     /* split assignment to a to avoid "relocation truncated to fit: R_X86_64_TPOFF32" error
+      * under GCC see issue #600 */
+     volatile uintptr_t a_addr = (uintptr_t) &xoshiro_s;
+-    uint64_t a = (uint64_t) a_addr;
++    sqlite_uint64 a = (sqlite_uint64) a_addr;
+     xoshiro_s[0] = splitmix64(&a);
+     xoshiro_s[1] = splitmix64(&a);
+     xoshiro_s[2] = splitmix64(&a);
+@@ -111037,7 +111037,7 @@ uint64_t xoshiro_next(void) {
  }
  
  static void xoshiro_randomness(unsigned char *ptr, int sz) {
