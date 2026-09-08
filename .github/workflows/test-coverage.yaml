@@ -2,7 +2,7 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [main, develop]
+    branches: [main, master]
   pull_request:
 
 name: test-coverage.yaml
@@ -44,7 +44,6 @@ jobs:
           plugins: noop
           disable_search: true
           token: ${{ secrets.CODECOV_TOKEN }}
-          gpg_verify: false
 
       - name: Show testthat output
         if: always()
