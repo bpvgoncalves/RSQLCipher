@@ -1,3 +1,8 @@
+# RSQLCipher 0.4.9
+
+## Other
+- Update bundled SQLCipher to version 4.19.0 (SQLite 3.53.4).
+
 # RSQLCipher 0.4.8
 
 ## Other
