@@ -110998,32 +110998,32 @@ struct private_block {
  *    anti-forensic spray */
 
 #if defined(_MSC_VER)
-static __declspec(thread) volatile uint64_t xoshiro_s[4];
+static __declspec(thread) volatile sqlite_uint64 xoshiro_s[4];
 #else
-static __thread volatile uint64_t xoshiro_s[4];
+static __thread volatile sqlite_uint64 xoshiro_s[4];
 #endif
 
 /* splitmix64 is recommended as the seed generator for xoshiro
  * based on public domain implementation at https://prng.di.unimi.it/splitmix64.c */
-static uint64_t splitmix64(uint64_t *x) {
-  uint64_t z = (*x += 0x9e3779b97f4a7c15ULL);
+static sqlite_uint64 splitmix64(sqlite_uint64 *x) {
+  sqlite_uint64 z = (*x += 0x9e3779b97f4a7c15ULL);
   z = (z ^ (z >> 30)) * 0xbf58476d1ce4e5b9ULL;
   z = (z ^ (z >> 27)) * 0x94d049bb133111ebULL;
   return z ^ (z >> 31);
 }
 
-static inline uint64_t xoshiro_rotl(const uint64_t x, int k) {
+static inline sqlite_uint64 xoshiro_rotl(const sqlite_uint64 x, int k) {
   return (x << k) | (x >> (64 - k));
 }
 
-uint64_t xoshiro_next(void) {
-  volatile uint64_t result, t;
+sqlite_uint64 xoshiro_next(void) {
+  volatile sqlite_uint64 result, t;
   /* if the state has not been initialized (all zeros), seed */
   if(!(xoshiro_s[0] | xoshiro_s[1] | xoshiro_s[2] | xoshiro_s[3])) {
     /* split assignment to a to avoid "relocation truncated to fit: R_X86_64_TPOFF32" error
      * under GCC see issue #600 */
     volatile uintptr_t a_addr = (uintptr_t) &xoshiro_s;
-    uint64_t a = (uint64_t) a_addr;
+    sqlite_uint64 a = (sqlite_uint64) a_addr;
     xoshiro_s[0] = splitmix64(&a);
     xoshiro_s[1] = splitmix64(&a);
     xoshiro_s[2] = splitmix64(&a);
@@ -111045,7 +111045,7 @@ uint64_t xoshiro_next(void) {
 }
 
 static void xoshiro_randomness(unsigned char *ptr, int sz) {
-  volatile uint64_t val;
+  volatile sqlite_uint64 val;
   volatile int to_copy;
   while (sz > 0) {
     val = xoshiro_next();
@@ -111576,10 +111576,10 @@ static void sqlcipher_mlock(void *ptr, sqlite_uint64 sz) {
 
   if(ptr == NULL || sz == 0) return;
 
-  sqlcipher_log(SQLCIPHER_LOG_TRACE, SQLCIPHER_LOG_MEMORY, "sqlcipher_mlock: calling mlock(%p,%lu); _SC_PAGESIZE=%lu", ptr - offset, sz + offset, pagesize);
-  rc = mlock(ptr - offset, sz + offset);
+  sqlcipher_log(SQLCIPHER_LOG_TRACE, SQLCIPHER_LOG_MEMORY, "sqlcipher_mlock: calling mlock(%p,%lu); _SC_PAGESIZE=%lu", (unsigned char *) ptr - offset, sz + offset, pagesize);
+  rc = mlock((int *)(unsigned char *) ptr - offset, sz + offset);
   if(rc!=0) {
-    sqlcipher_log(SQLCIPHER_LOG_INFO, SQLCIPHER_LOG_MEMORY, "sqlcipher_mlock: mlock(%p,%lu) returned %d errno=%d", ptr - offset, sz + offset, rc, errno);
+    sqlcipher_log(SQLCIPHER_LOG_INFO, SQLCIPHER_LOG_MEMORY, "sqlcipher_mlock: mlock(%p,%lu) returned %d errno=%d", (unsigned char *) ptr - offset, sz + offset, rc, errno);
   }
 #elif defined(_WIN32)
 #if !(defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP || WINAPI_FAMILY == WINAPI_FAMILY_PC_APP))
@@ -111603,10 +111603,10 @@ static void sqlcipher_munlock(void *ptr, sqlite_uint64 sz) {
 
   if(ptr == NULL || sz == 0) return;
 
-  sqlcipher_log(SQLCIPHER_LOG_TRACE, SQLCIPHER_LOG_MEMORY, "sqlcipher_munlock: calling munlock(%p,%lu)", ptr - offset, sz + offset);
-  rc = munlock(ptr - offset, sz + offset);
+  sqlcipher_log(SQLCIPHER_LOG_TRACE, SQLCIPHER_LOG_MEMORY, "sqlcipher_munlock: calling munlock(%p,%lu)", (unsigned char *) ptr - offset, sz + offset);
+  rc = munlock((int *)(unsigned char *) ptr - offset, sz + offset);
   if(rc!=0) {
-    sqlcipher_log(SQLCIPHER_LOG_INFO, SQLCIPHER_LOG_MEMORY, "sqlcipher_munlock: munlock(%p,%lu) returned %d errno=%d", ptr - offset, sz + offset, rc, errno);
+    sqlcipher_log(SQLCIPHER_LOG_INFO, SQLCIPHER_LOG_MEMORY, "sqlcipher_munlock: munlock(%p,%lu) returned %d errno=%d", (unsigned char *) ptr - offset, sz + offset, rc, errno);
   }
 #elif defined(_WIN32)
 #if !(defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP || WINAPI_FAMILY == WINAPI_FAMILY_PC_APP))
