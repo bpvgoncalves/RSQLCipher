@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      CODECOV_SKIP_VALIDATION: true
 
     steps:
       - uses: actions/checkout@v6
@@ -36,6 +35,9 @@ jobs:
           print(cov)
           covr::to_cobertura(cov)
         shell: Rscript {0}
+
+      - name: Work around Codecov's broken key host
+        run: curl -fsSL https://uploader.codecov.io/verification.gpg | gpg --import
 
       - uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6
         with:
