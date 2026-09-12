@@ -36,8 +36,16 @@ jobs:
           covr::to_cobertura(cov)
         shell: Rscript {0}
 
-      - name: Work around Codecov's broken key host
-        run: curl -fsSL https://uploader.codecov.io/verification.gpg | gpg --import
+      - name: Download, verify and import Codecov's GPG key
+        run: |
+          curl -fsSL https://uploader.codecov.io/verification.gpg -o codecov.gpg
+          ACTUAL_FPR=$(gpg --show-keys --with-colons --with-fingerprint codecov.gpg | awk -F: '/^fpr:/ {print $10; exit}')
+          EXPECTED_FPR="27034E7FDB850E0BBC2C62FF806BB28AED779869"
+          if [ "$ACTUAL_FPR" != "$EXPECTED_FPR" ]; then
+            echo "::error::Codecov GPG key fingerprint mismatch! got $ACTUAL_FPR expected $EXPECTED_FPR"
+            exit 1
+          fi
+          gpg --import codecov.gpg
 
       - uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6
         with:
