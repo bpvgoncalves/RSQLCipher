@@ -10,14 +10,14 @@ PKG_CPPFLAGS = -I.                              \
                -DSQLITE_ENABLE_JSON1            \
                -DSQLITE_ENABLE_STAT4            \
                -DSQLITE_SOUNDEX                 \
-               -DSQLITE_USE_URI=1               \
+               -DSQLITE_USE_URI                 \
                -DSQLITE_MAX_LENGTH=2147483647   \
                -DHAVE_USLEEP=1                  \
-               -DSQLITE_HAS_CODEC               \
                -DSQLITE_TEMP_STORE=3            \
                -DSQLITE_THREADSAFE=1            \
                -DSQLITE_EXTRA_INIT=sqlcipher_extra_init          \
-               -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown
+               -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown  \
+               -DSQLITE_DIRECT_OVERFLOW_READ=0  \
 
 PKG_CXXFLAGS = $(CXX_VISIBILITY)
 
