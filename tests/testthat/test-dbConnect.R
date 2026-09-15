@@ -237,37 +237,50 @@ test_that("busy_handler timeout", {
 
 
 test_that("it is posible to set a valid database key/password", {
+  on.exit(
+    try({
+      suppressWarnings(dbDisconnect(con))
+      unlink(tmp_db, TRUE)
+    }))
+
+  tmp_db <- tempfile()
 
   key_1 <- "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"
   key_2 <- "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"
 
-  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = 123456),
+  expect_warning(dbConnect(RSQLCipher::SQLCipher(), tmp_db, key = 123456),
                  "not valid")
-  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = 12345L),
+  expect_warning(dbConnect(RSQLCipher::SQLCipher(), tmp_db, key = 12345L),
                  "not valid")
-  expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", key = NA),
+  expect_warning(dbConnect(RSQLCipher::SQLCipher(), tmp_db, key = NA),
                  "not valid")
 
-  con <-  dbConnect(RSQLCipher::SQLCipher(),
-                    ":memory:",
-                    key = key_1)
+  con <-  dbConnect(RSQLCipher::SQLCipher(), tmp_db, key = key_1)
   dbDisconnect(con)
+  unlink(tmp_db)
 
-  con <-  dbConnect(RSQLCipher::SQLCipher(),
-                    ":memory:",
-                    key = key_2)
+  con <-  dbConnect(RSQLCipher::SQLCipher(), tmp_db, key = key_2)
   dbDisconnect(con)
+  unlink(tmp_db)
 
-  con <-  dbConnect(RSQLCipher::SQLCipher(),
-                    ":memory:",
-                    key = "my_password")
+  con <-  dbConnect(RSQLCipher::SQLCipher(), tmp_db, key = "my_password")
   dbDisconnect(con)
+  unlink(tmp_db)
 
 })
 
 test_that("it is posible to set a valid cache size", {
+  on.exit(
+    try({
+      suppressWarnings(dbDisconnect(con))
+      unlink(tmp_db, TRUE)
+    }))
+
+  tmp_db <- tempfile()
 
   expect_warning(dbConnect(RSQLCipher::SQLCipher(), ":memory:", cache_size = "a"), "NAs introduced")
+
   con <-  dbConnect(RSQLCipher::SQLCipher(), ":memory:", cache_size = 1000)
   dbDisconnect(con)
+  unlink(tmp_db)
 })
