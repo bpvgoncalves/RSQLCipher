@@ -31,6 +31,7 @@ if the original key is an hex key, the new key MUST be a hex key as well.
   key_2 <- "ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789"
   tmp_file <- tempfile()
   con <- dbConnect(RSQLCipher::SQLCipher(), tmp_file, key = key_1)
+  dbWriteTable(con, "mtcars", mtcars)
 
   databaseKeyChange(con, key_1, key_2)
   dbDisconnect(con)
